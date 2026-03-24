@@ -2115,6 +2115,8 @@
             hour: '2-digit', minute: '2-digit'
         });
 
+    let activeFilters = { housing: 'all', flights: 'all' };
+
     // --- Система выбора (localStorage + GitHub API) ---
     const GH_REPO = 'Daria1999D/samara-trip';
     const GH_FILE = 'picks.json';
@@ -2330,7 +2332,7 @@
     }
     updatePicksBar();
 
-    let activeFilters = { housing: 'all', flights: 'all' };
+    // moved up
 
     function setFilter(section, filter) {
         activeFilters[section] = filter;
