@@ -76,6 +76,8 @@
 
         .intro { max-width: 800px; margin: 0 auto; padding: 40px 20px 20px; }
         .intro h2 { font-size: 1.3em; font-weight: 400; margin-bottom: 12px; color: #c8d6e5; }
+        #criteriaBody.collapsed { display: none; }
+        .toggle-arrow.open { transform: rotate(180deg); }
         .criteria-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 12px; margin-top: 16px;
@@ -500,20 +502,25 @@
 </div>
 
 <div class="intro">
-    <h2>Критерии оценки</h2>
-    <p style="color: #6a7a8a; font-size: 0.9em; margin-bottom: 16px;">12 вариантов, детальный скорринг по 11 параметрам. Бюджет: до 25 000 ₽ / 3 ночи. Приоритет — ремонт и отзывы.</p>
-    <div class="criteria-grid">
-        <div class="criteria-item"><div class="icon">✨</div><div class="label">Ремонт / стиль</div><div class="weight">18%</div></div>
-        <div class="criteria-item"><div class="icon">📶</div><div class="label">Wi-Fi</div><div class="weight">18%</div></div>
-        <div class="criteria-item"><div class="icon">💬</div><div class="label">Отзывы</div><div class="weight">12%</div></div>
-        <div class="criteria-item"><div class="icon">📐</div><div class="label">Площадь</div><div class="weight">10%</div></div>
-        <div class="criteria-item"><div class="icon">📍</div><div class="label">До свадьбы</div><div class="weight">9%</div></div>
-        <div class="criteria-item"><div class="icon">🏙</div><div class="label">До центра</div><div class="weight">7%</div></div>
-        <div class="criteria-item"><div class="icon">🌊</div><div class="label">Вид</div><div class="weight">6%</div></div>
-        <div class="criteria-item"><div class="icon">🛏</div><div class="label">Кровать</div><div class="weight">6%</div></div>
-        <div class="criteria-item"><div class="icon">🍳</div><div class="label">Кухня</div><div class="weight">5%</div></div>
-        <div class="criteria-item"><div class="icon">🌙</div><div class="label">Заселение</div><div class="weight">4%</div></div>
-        <div class="criteria-item"><div class="icon">💰</div><div class="label">Цена</div><div class="weight">5%</div></div>
+    <div onclick="document.getElementById('criteriaBody').classList.toggle('collapsed');this.querySelector('.toggle-arrow').classList.toggle('open')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;">
+        <h2 style="margin:0;">Критерии оценки <span style="font-size:0.6em;color:#656d76;font-weight:400;">11 параметров</span></h2>
+        <span class="toggle-arrow" style="color:#656d76;font-size:0.8em;transition:transform 0.3s;">&#9660;</span>
+    </div>
+    <div id="criteriaBody" class="collapsed">
+        <p style="color: #6a7a8a; font-size: 0.9em; margin:12px 0 16px;">Бюджет: до 25 000 ₽ / 3 ночи. Приоритеты — ремонт и Wi-Fi (по 18%).</p>
+        <div class="criteria-grid">
+            <div class="criteria-item"><div class="icon">✨</div><div class="label">Ремонт / стиль</div><div class="weight">18%</div></div>
+            <div class="criteria-item"><div class="icon">📶</div><div class="label">Wi-Fi</div><div class="weight">18%</div></div>
+            <div class="criteria-item"><div class="icon">💬</div><div class="label">Отзывы</div><div class="weight">12%</div></div>
+            <div class="criteria-item"><div class="icon">📐</div><div class="label">Площадь</div><div class="weight">10%</div></div>
+            <div class="criteria-item"><div class="icon">📍</div><div class="label">До свадьбы</div><div class="weight">9%</div></div>
+            <div class="criteria-item"><div class="icon">🏙</div><div class="label">До центра</div><div class="weight">7%</div></div>
+            <div class="criteria-item"><div class="icon">🌊</div><div class="label">Вид</div><div class="weight">6%</div></div>
+            <div class="criteria-item"><div class="icon">🛏</div><div class="label">Кровать</div><div class="weight">6%</div></div>
+            <div class="criteria-item"><div class="icon">🍳</div><div class="label">Кухня</div><div class="weight">5%</div></div>
+            <div class="criteria-item"><div class="icon">🌙</div><div class="label">Заселение</div><div class="weight">4%</div></div>
+            <div class="criteria-item"><div class="icon">💰</div><div class="label">Цена</div><div class="weight">5%</div></div>
+        </div>
     </div>
 </div>
 
