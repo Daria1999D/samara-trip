@@ -1327,65 +1327,184 @@
 
     <div class="flight-section">
         <h2>Москва &rarr; Самара &middot; 9 апреля (четверг)</h2>
-        <p style="color: #6a7a8a; font-size: 0.9em; margin-bottom: 20px;">Вылет вечером после работы. Перелёт ~1ч 50мин. Самара = МСК+1.</p>
+        <p style="color: #6a7a8a; font-size: 0.9em; margin-bottom: 20px;">12 прямых рейсов. Перелёт ~1ч 50мин. Самара = МСК+1. Вечерние выделены.</p>
         <div class="flight-grid">
             <div class="flight-card">
                 <div class="flight-route">
-                    <div>
-                        <div class="flight-time">15:55</div>
-                        <div class="flight-city">Домодедово (DME)</div>
-                    </div>
+                    <div><div class="flight-time">06:25</div><div class="flight-city">Шереметьево (SVO)</div></div>
                     <div class="flight-arrow">&rarr;</div>
-                    <div>
-                        <div class="flight-time">18:50</div>
-                        <div class="flight-city">Курумоч (KUF)</div>
-                    </div>
-                    <div class="flight-price-tag">~3 829 ₽</div>
+                    <div><div class="flight-time">09:15</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Россия</span> FV 6061</span>
+                    <span>1ч 50мин</span><span>Прямой</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="FV6061" onclick="toggleLike('FV6061', 'FV 6061 (06:25)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="FV6061" onclick="toggleDislike('FV6061')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div><div class="flight-time">07:50</div><div class="flight-city">Внуково (VKO)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">10:35</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-pobeda">Победа</span> DP 423</span>
+                    <span>1ч 45мин</span><span>Прямой</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="DP423" onclick="toggleLike('DP423', 'DP 423 (07:50)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="DP423" onclick="toggleDislike('DP423')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div><div class="flight-time">08:25</div><div class="flight-city">Шереметьево (SVO)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">11:10</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1210</span>
+                    <span>1ч 45мин</span><span>Прямой</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="SU1210" onclick="toggleLike('SU1210', 'SU 1210 (08:25)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="SU1210" onclick="toggleDislike('SU1210')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div><div class="flight-time">10:05</div><div class="flight-city">Шереметьево (SVO)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">12:55</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1218</span>
+                    <span>1ч 50мин</span><span>Прямой</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="SU1218" onclick="toggleLike('SU1218', 'SU 1218 (10:05)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="SU1218" onclick="toggleDislike('SU1218')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div><div class="flight-time">13:40</div><div class="flight-city">Шереметьево (SVO)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">16:35</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1212</span>
+                    <span>1ч 55мин</span><span>Прямой</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="SU1212" onclick="toggleLike('SU1212', 'SU 1212 (13:40)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="SU1212" onclick="toggleDislike('SU1212')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div><div class="flight-time">14:15</div><div class="flight-city">Шереметьево (SVO)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">17:00</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-pobeda">Победа</span> DP 6583</span>
+                    <span>1ч 45мин</span><span>Прямой</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="DP6583" onclick="toggleLike('DP6583', 'DP 6583 (14:15)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="DP6583" onclick="toggleDislike('DP6583')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div><div class="flight-time">14:30</div><div class="flight-city">Домодедово (DME)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">17:15</div><div class="flight-city">Курумоч (KUF)</div></div>
                 </div>
                 <div class="flight-details">
                     <span><span class="badge-airline airline-s7">S7</span> S7 1073</span>
-                    <span>1ч 55мин</span>
-                    <span>Прямой рейс</span>
-                </div>
-                <div class="flight-links">
-                    <a href="https://www.s7.ru/ru/flight/from/MOW/to/KUF/" target="_blank" class="btn-book secondary">S7 Airlines <span class="arrow">&rarr;</span></a>
+                    <span>1ч 45мин</span><span>Прямой</span>
                 </div>
                 <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="s71073" onclick="toggleLike('s71073', 'S7 1073 (15:55)')">
+                    <button class="like-btn" data-hotel="S71073" onclick="toggleLike('S71073', 'S7 1073 (14:30)')">
                         <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
                     </button>
-                    <button class="dislike-btn" data-hotel="s71073" onclick="toggleDislike('s71073')">
+                    <button class="dislike-btn" data-hotel="S71073" onclick="toggleDislike('S71073')">
                         &#10005; Нет
                     </button>
                 </div>
             </div>
 
-            <div class="flight-card">
+            <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
                 <div class="flight-route">
-                    <div>
-                        <div class="flight-time">15:40</div>
-                        <div class="flight-city">Шереметьево (SVO)</div>
-                    </div>
+                    <div><div class="flight-time">16:55</div><div class="flight-city">Шереметьево (SVO)</div></div>
                     <div class="flight-arrow">&rarr;</div>
-                    <div>
-                        <div class="flight-time">18:25</div>
-                        <div class="flight-city">Курумоч (KUF)</div>
-                    </div>
-                    <div class="flight-price-tag">~2 389 ₽</div>
+                    <div><div class="flight-time">19:40</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1214</span>
+                    <span>1ч 45мин</span><span>Прямой</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="SU1214" onclick="toggleLike('SU1214', 'SU 1214 (16:55)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="SU1214" onclick="toggleDislike('SU1214')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
+                <div class="flight-route">
+                    <div><div class="flight-time">19:20</div><div class="flight-city">Шереметьево (SVO)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">22:00</div><div class="flight-city">Курумоч (KUF)</div></div>
                 </div>
                 <div class="flight-details">
                     <span><span class="badge-airline airline-pobeda">Победа</span> DP 6581</span>
-                    <span>1ч 45мин</span>
-                    <span>Прямой рейс</span>
-                </div>
-                <div class="flight-links">
-                    <a href="https://www.flypobeda.ru/flights/MOW/KUF" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
+                    <span>1ч 40мин</span><span>Прямой</span>
+                    <span style="color: #5cb885; font-weight: 500;">После работы</span>
                 </div>
                 <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="dp6581" onclick="toggleLike('dp6581', 'DP 6581 (15:40)')">
+                    <button class="like-btn" data-hotel="DP6581" onclick="toggleLike('DP6581', 'DP 6581 (19:20)')">
                         <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
                     </button>
-                    <button class="dislike-btn" data-hotel="dp6581" onclick="toggleDislike('dp6581')">
+                    <button class="dislike-btn" data-hotel="DP6581" onclick="toggleDislike('DP6581')">
                         &#10005; Нет
                     </button>
                 </div>
@@ -1393,185 +1512,69 @@
 
             <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
                 <div class="flight-route">
-                    <div>
-                        <div class="flight-time">19:35</div>
-                        <div class="flight-city">Домодедово (DME)</div>
-                    </div>
+                    <div><div class="flight-time">19:30</div><div class="flight-city">Внуково (VKO)</div></div>
                     <div class="flight-arrow">&rarr;</div>
-                    <div>
-                        <div class="flight-time">21:30</div>
-                        <div class="flight-city">Курумоч (KUF)</div>
-                    </div>
-                    <div class="flight-price-tag">~3 434 ₽</div>
+                    <div><div class="flight-time">22:15</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-nordstar">ЮТэйр</span> UT 357</span>
+                    <span>1ч 45мин</span><span>Прямой</span>
+                    <span style="color: #5cb885; font-weight: 500;">После работы</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="UT357" onclick="toggleLike('UT357', 'UT 357 (19:30)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="UT357" onclick="toggleDislike('UT357')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
+                <div class="flight-route">
+                    <div><div class="flight-time">19:55</div><div class="flight-city">Шереметьево (SVO)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">22:45</div><div class="flight-city">Курумоч (KUF)</div></div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1604</span>
+                    <span>1ч 50мин</span><span>Прямой</span>
+                    <span style="color: #5cb885; font-weight: 500;">После работы</span>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="SU1604" onclick="toggleLike('SU1604', 'SU 1604 (19:55)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="SU1604" onclick="toggleDislike('SU1604')">
+                        &#10005; Нет
+                    </button>
+                </div>
+            </div>
+
+            <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
+                <div class="flight-route">
+                    <div><div class="flight-time">22:35</div><div class="flight-city">Домодедово (DME)</div></div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div><div class="flight-time">01:30+1</div><div class="flight-city">Курумоч (KUF)</div></div>
                 </div>
                 <div class="flight-details">
                     <span><span class="badge-airline airline-nordstar">NordStar</span> Y7 4211</span>
-                    <span>1ч 55мин</span>
-                    <span>Прямой рейс</span>
-                    <span style="color: #5cb885; font-weight: 500;">Подходит по времени</span>
-                </div>
-                <div class="flight-links">
-                    <a href="https://avia.tutu.ru/f/Moskva/Samara/?date=09.04.2026" target="_blank" class="btn-book primary">Купить на Туту <span class="arrow">&rarr;</span></a>
-                </div>
-                <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="y74211" onclick="toggleLike('y74211', 'Y7 4211 (19:35)')">
-                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
-                    </button>
-                    <button class="dislike-btn" data-hotel="y74211" onclick="toggleDislike('y74211')">
-                        &#10005; Нет
-                    </button>
-                </div>
-            </div>
-
-            <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
-                <div class="flight-route">
-                    <div><div class="flight-time">20:45</div><div class="flight-city">Шереметьево (SVO)</div></div>
-                    <div class="flight-arrow">&rarr;</div>
-                    <div><div class="flight-time">22:40</div><div class="flight-city">Курумоч (KUF)</div></div>
-                    <div class="flight-price-tag">~5 356 ₽</div>
-                </div>
-                <div class="flight-details">
-                    <span><span class="badge-airline airline-aeroflot">Россия</span> FV 6077</span>
-                    <span>1ч 55мин</span><span>Прямой</span>
-                    <span style="color: #5cb885; font-weight: 500;">После работы</span>
-                </div>
-                <div class="flight-links"><a href="https://avia.tutu.ru/f/Moskva/Samara/?date=09.04.2026" target="_blank" class="btn-book secondary">Туту <span class="arrow">&rarr;</span></a></div>
-                <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="fv6077" onclick="toggleLike('fv6077', 'FV 6077 (20:45)')"><span class="heart">&#9825;</span> <span class="like-text">Нравится</span></button>
-                    <button class="dislike-btn" data-hotel="fv6077" onclick="toggleDislike('fv6077')">&#10005; Нет</button>
-                </div>
-            </div>
-
-            <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
-                <div class="flight-route">
-                    <div><div class="flight-time">21:05</div><div class="flight-city">Домодедово (DME)</div></div>
-                    <div class="flight-arrow">&rarr;</div>
-                    <div><div class="flight-time">23:00</div><div class="flight-city">Курумоч (KUF)</div></div>
-                    <div class="flight-price-tag">~3 434 ₽</div>
-                </div>
-                <div class="flight-details">
-                    <span><span class="badge-airline airline-nordstar">NordStar</span> Y7 4211 (поздний)</span>
                     <span>1ч 55мин</span><span>Прямой</span>
                     <span style="color: #5cb885; font-weight: 500;">Самый поздний</span>
                 </div>
-                <div class="flight-links"><a href="https://avia.tutu.ru/f/Moskva/Samara/?date=09.04.2026" target="_blank" class="btn-book secondary">Туту <span class="arrow">&rarr;</span></a></div>
                 <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="y74211late" onclick="toggleLike('y74211late', 'Y7 4211 (21:05)')"><span class="heart">&#9825;</span> <span class="like-text">Нравится</span></button>
-                    <button class="dislike-btn" data-hotel="y74211late" onclick="toggleDislike('y74211late')">&#10005; Нет</button>
-                </div>
-            </div>
-
-            <div class="flight-card">
-                <div class="flight-route">
-                    <div><div class="flight-time">21:50</div><div class="flight-city">Домодедово (DME)</div></div>
-                    <div class="flight-arrow">&rarr;</div>
-                    <div><div class="flight-time">23:40</div><div class="flight-city">Курумоч (KUF)</div></div>
-                    <div class="flight-price-tag">~3 189 ₽</div>
-                </div>
-                <div class="flight-details">
-                    <span><span class="badge-airline" style="background:rgba(255,152,0,0.15);color:#ffb74d;">Уральские</span> U6 166</span>
-                    <span>1ч 50мин</span><span>Прямой</span>
-                </div>
-                <div class="flight-links"><a href="https://www.uralairlines.ru/aviabilety/mow_kuf/" target="_blank" class="btn-book secondary">Уральские <span class="arrow">&rarr;</span></a></div>
-                <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="u6166" onclick="toggleLike('u6166', 'U6 166 (21:50)')"><span class="heart">&#9825;</span> <span class="like-text">Нравится</span></button>
-                    <button class="dislike-btn" data-hotel="u6166" onclick="toggleDislike('u6166')">&#10005; Нет</button>
-                </div>
-            </div>
-
-            <div class="flight-card">
-                <div class="flight-route">
-                    <div>
-                        <div class="flight-time">06:30</div>
-                        <div class="flight-city">Шереметьево (SVO)</div>
-                    </div>
-                    <div class="flight-arrow">&rarr;</div>
-                    <div>
-                        <div class="flight-time">09:25</div>
-                        <div class="flight-city">Курумоч (KUF)</div>
-                    </div>
-                    <div class="flight-price-tag">~2 700 ₽</div>
-                </div>
-                <div class="flight-details">
-                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1602</span>
-                    <span>1ч 55мин</span>
-                    <span>Прямой рейс</span>
-                </div>
-                <div class="flight-links">
-                    <a href="https://avia.tutu.ru/f/Moskva/Samara/Aeroflot/?date=09.04.2026" target="_blank" class="btn-book secondary">Аэрофлот <span class="arrow">&rarr;</span></a>
-                </div>
-                <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="su1602" onclick="toggleLike('su1602', 'SU 1602 (06:30)')">
+                    <button class="like-btn" data-hotel="Y74211" onclick="toggleLike('Y74211', 'Y7 4211 (22:35)')">
                         <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
                     </button>
-                    <button class="dislike-btn" data-hotel="su1602" onclick="toggleDislike('su1602')">
+                    <button class="dislike-btn" data-hotel="Y74211" onclick="toggleDislike('Y74211')">
                         &#10005; Нет
                     </button>
                 </div>
             </div>
 
-            <div class="flight-card">
-                <div class="flight-route">
-                    <div>
-                        <div class="flight-time">12:40</div>
-                        <div class="flight-city">Внуково (VKO)</div>
-                    </div>
-                    <div class="flight-arrow">&rarr;</div>
-                    <div>
-                        <div class="flight-time">15:30</div>
-                        <div class="flight-city">Курумоч (KUF)</div>
-                    </div>
-                    <div class="flight-price-tag">~2 389 ₽</div>
-                </div>
-                <div class="flight-details">
-                    <span><span class="badge-airline airline-pobeda">Победа</span> DP 421</span>
-                    <span>1ч 50мин</span>
-                    <span>Прямой рейс</span>
-                </div>
-                <div class="flight-links">
-                    <a href="https://www.flypobeda.ru/flights/MOW/KUF" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
-                </div>
-                <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="dp421" onclick="toggleLike('dp421', 'DP 421 (12:40)')">
-                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
-                    </button>
-                    <button class="dislike-btn" data-hotel="dp421" onclick="toggleDislike('dp421')">
-                        &#10005; Нет
-                    </button>
-                </div>
-            </div>
-
-            <div class="flight-card">
-                <div class="flight-route">
-                    <div>
-                        <div class="flight-time">13:15</div>
-                        <div class="flight-city">Шереметьево (SVO)</div>
-                    </div>
-                    <div class="flight-arrow">&rarr;</div>
-                    <div>
-                        <div class="flight-time">16:10</div>
-                        <div class="flight-city">Курумоч (KUF)</div>
-                    </div>
-                    <div class="flight-price-tag">~2 700 ₽</div>
-                </div>
-                <div class="flight-details">
-                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1606</span>
-                    <span>1ч 55мин</span>
-                    <span>Прямой рейс</span>
-                </div>
-                <div class="flight-links">
-                    <a href="https://avia.tutu.ru/f/Moskva/Samara/Aeroflot/?date=09.04.2026" target="_blank" class="btn-book secondary">Аэрофлот <span class="arrow">&rarr;</span></a>
-                </div>
-                <div class="flight-like-row">
-                    <button class="like-btn" data-hotel="su1606" onclick="toggleLike('su1606', 'SU 1606 (13:15)')">
-                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
-                    </button>
-                    <button class="dislike-btn" data-hotel="su1606" onclick="toggleDislike('su1606')">
-                        &#10005; Нет
-                    </button>
-                </div>
-            </div>
         </div>
+        <div class="flight-note">Цены уточняйте на <a href="https://www.aviasales.ru/search/MOW0904KUF1" target="_blank" style="color:#7ab8f5;">Авиасейлс</a> или <a href="https://avia.tutu.ru/f/Moskva/Samara/?date=09.04.2026" target="_blank" style="color:#7ab8f5;">Туту.ру</a></div>
     </div>
 
     <div class="flight-section">
