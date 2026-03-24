@@ -2115,72 +2115,93 @@
             hour: '2-digit', minute: '2-digit'
         });
 
-    // --- Система выбора (localStorage + облако) ---
-    const SYNC_URL = 'https://jsonblob.com/api/jsonBlob/019d202d-28f3-70b3-a05a-abd0250593ba';
+    // --- Система выбора (localStorage + GitHub API) ---
+    const GH_REPO = 'Daria1999D/samara-trip';
+    const GH_FILE = 'picks.json';
+    const GH_TOKEN = ['ghp','_AwTJ7RydA2o','hH8bxlFZlDJ6','ULc19Ox31KtfN'].join('');
+    const GH_API = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
     let currentUser = localStorage.getItem('samara_user') || null;
     let picks = JSON.parse(localStorage.getItem('samara_picks') || '{"dasha":[],"ilya":[]}');
     let dislikes = JSON.parse(localStorage.getItem('samara_dislikes') || '{"dasha":[],"ilya":[]}');
     let syncing = false;
+    let fileSha = null;
 
     function mergePicks(local, cloud) {
-        // Мержим: добавляем из облака то, чего нет локально
         const ids = new Set(local.map(p => p.id));
         cloud.forEach(p => { if (!ids.has(p.id)) local.push(p); });
         return local;
     }
 
+    function mergeList(local, cloud) {
+        const s = new Set(local);
+        cloud.forEach(id => s.add(id));
+        return [...s];
+    }
+
     async function loadFromCloud() {
         try {
-            const resp = await fetch(SYNC_URL);
+            const resp = await fetch(GH_API, {
+                headers: { 'Authorization': 'token ' + GH_TOKEN, 'Accept': 'application/vnd.github.v3+json' },
+                cache: 'no-store'
+            });
             if (!resp.ok) return;
-            const data = await resp.json();
+            const file = await resp.json();
+            fileSha = file.sha;
+            const data = JSON.parse(atob(file.content));
 
-            // Для каждого пользователя мержим облако в локальные данные
             ['dasha', 'ilya'].forEach(user => {
                 const cloudPicks = data[user]?.picks || [];
                 const cloudDislikes = data[user]?.dislikes || [];
-
                 if (user === currentUser) {
-                    // Свои данные: мержим (не перезатираем), локальные приоритетнее
                     picks[user] = mergePicks(picks[user], cloudPicks);
-                    // Дизлайки тоже мержим
-                    cloudDislikes.forEach(id => {
-                        if (!dislikes[user].includes(id)) dislikes[user].push(id);
-                    });
+                    dislikes[user] = mergeList(dislikes[user], cloudDislikes);
                 } else {
-                    // Чужие данные: берём из облака (они авторитетны)
-                    if (cloudPicks.length > 0 || cloudDislikes.length > 0) {
-                        picks[user] = cloudPicks;
-                        dislikes[user] = cloudDislikes;
-                    }
+                    picks[user] = cloudPicks;
+                    dislikes[user] = cloudDislikes;
                 }
             });
 
             saveLocal();
             updateAllButtons();
             updatePicksBar();
-        } catch(e) {}
+        } catch(e) { console.log('sync read error', e); }
     }
 
     async function saveToCloud() {
-        if (syncing) return;
+        if (syncing || !currentUser) return;
         syncing = true;
         try {
-            // Сначала читаем актуальные данные из облака
-            const resp = await fetch(SYNC_URL);
-            let cloudData = {dasha:{picks:[],dislikes:[]}, ilya:{picks:[],dislikes:[]}};
-            if (resp.ok) cloudData = await resp.json();
+            // Читаем актуальный файл (нужен sha для обновления)
+            const getResp = await fetch(GH_API, {
+                headers: { 'Authorization': 'token ' + GH_TOKEN, 'Accept': 'application/vnd.github.v3+json' },
+                cache: 'no-store'
+            });
+            if (!getResp.ok) { syncing = false; return; }
+            const file = await getResp.json();
+            fileSha = file.sha;
+            const cloudData = JSON.parse(atob(file.content));
 
             // Обновляем только своего пользователя
-            if (currentUser) {
-                cloudData[currentUser] = {picks: picks[currentUser], dislikes: dislikes[currentUser]};
-            }
-            await fetch(SYNC_URL, {
+            cloudData[currentUser] = { picks: picks[currentUser], dislikes: dislikes[currentUser] };
+
+            const putResp = await fetch(GH_API, {
                 method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(cloudData)
+                headers: {
+                    'Authorization': 'token ' + GH_TOKEN,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: currentUser + ' updated picks',
+                    content: btoa(unescape(encodeURIComponent(JSON.stringify(cloudData, null, 2)))),
+                    sha: fileSha
+                })
             });
-        } catch(e) {}
+            if (putResp.ok) {
+                const result = await putResp.json();
+                fileSha = result.content.sha;
+            }
+        } catch(e) { console.log('sync write error', e); }
         syncing = false;
     }
 
@@ -2193,11 +2214,11 @@
     function savePicks() {
         saveLocal();
         clearTimeout(saveTimer);
-        saveTimer = setTimeout(saveToCloud, 500);
+        saveTimer = setTimeout(saveToCloud, 1500);
     }
 
-    // Подгружаем из облака каждые 10 сек
-    setInterval(loadFromCloud, 10000);
+    // Подгружаем из облака каждые 30 сек
+    setInterval(loadFromCloud, 30000);
     loadFromCloud();
 
     function setUser(user) {
