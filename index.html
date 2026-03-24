@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Самара 9–12 апреля — выбираем жильё</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f1923;
+            color: #e8e6e3;
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0f1923 50%, #1a2332 100%);
+            padding: 60px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(100,180,255,0.08) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: 2.2em;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1em;
+            color: #8a9bae;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .hero .dates {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 8px 24px;
+            border: 1px solid rgba(100,180,255,0.2);
+            border-radius: 30px;
+            font-size: 0.95em;
+            color: #7ab8f5;
+            position: relative;
+        }
+
+        .intro {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px 20px;
+        }
+
+        .intro h2 {
+            font-size: 1.3em;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: #c8d6e5;
+        }
+
+        .criteria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .criteria-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .criteria-item .icon { font-size: 1.4em; margin-bottom: 4px; }
+        .criteria-item .label { font-size: 0.85em; color: #8a9bae; }
+        .criteria-item .weight { font-size: 0.75em; color: #5a6a7a; margin-top: 2px; }
+
+        .cards {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(100,180,255,0.25);
+        }
+
+        .card-header {
+            padding: 24px 28px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-size: 1.4em;
+            font-weight: 500;
+        }
+
+        .card-type {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(100,180,255,0.1);
+            color: #7ab8f5;
+        }
+
+        .card-meta {
+            padding: 0 28px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.9em;
+            color: #8a9bae;
+        }
+
+        .card-meta span::before {
+            margin-right: 6px;
+        }
+
+        .card-price {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #7ab8f5;
+        }
+
+        .card-price small {
+            font-size: 0.5em;
+            font-weight: 300;
+            color: #5a7a9a;
+        }
+
+        .scoring {
+            padding: 20px 28px;
+            background: rgba(0,0,0,0.15);
+        }
+
+        .scoring h3 {
+            font-size: 0.85em;
+            font-weight: 400;
+            color: #5a7a9a;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 14px;
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 12px;
+        }
+
+        .score-label {
+            width: 120px;
+            font-size: 0.85em;
+            color: #8a9bae;
+            flex-shrink: 0;
+        }
+
+        .score-bar-bg {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .score-value {
+            width: 36px;
+            text-align: right;
+            font-size: 0.85em;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .total-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .total-label {
+            font-size: 0.95em;
+            color: #c8d6e5;
+        }
+
+        .total-value {
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        .card-analysis {
+            padding: 20px 28px 24px;
+        }
+
+        .card-analysis h3 {
+            font-size: 0.85em;
+            font-weight: 400;
+            color: #5a7a9a;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .pros li, .cons li {
+            font-size: 0.88em;
+            margin-bottom: 6px;
+            padding-left: 6px;
+            list-style: none;
+        }
+
+        .pros li::before { content: '+ '; color: #5cb885; font-weight: 600; }
+        .cons li::before { content: '- '; color: #e07a7a; font-weight: 600; }
+
+        .verdict {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: rgba(100,180,255,0.06);
+            border-left: 3px solid #7ab8f5;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9em;
+            color: #a8c4e0;
+        }
+
+        .winner-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: linear-gradient(135deg, #f0c040, #e8a020);
+            color: #1a1a1a;
+            font-size: 0.75em;
+            font-weight: 600;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .summary {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .summary h2 {
+            font-size: 1.4em;
+            font-weight: 300;
+            margin-bottom: 16px;
+            color: #c8d6e5;
+        }
+
+        .summary p {
+            color: #8a9bae;
+            font-size: 0.95em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .ranking {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .rank-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            min-width: 160px;
+        }
+
+        .rank-item.first {
+            border-color: rgba(240,192,64,0.3);
+            background: rgba(240,192,64,0.05);
+        }
+
+        .rank-position {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .rank-name {
+            font-size: 0.85em;
+            color: #8a9bae;
+        }
+
+        .rank-score {
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #3a4a5a;
+            font-size: 0.8em;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6em; }
+            .card-header { padding: 20px; }
+            .scoring, .card-analysis { padding: 16px 20px; }
+            .card-meta { padding: 0 20px 12px; }
+            .pros-cons { grid-template-columns: 1fr; }
+            .score-label { width: 90px; font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Самара</h1>
+    <div class="subtitle">Выбираем жильё для поездки на свадьбу</div>
+    <div class="dates">9 – 12 апреля 2026 &nbsp;&middot;&nbsp; 3 ночи &nbsp;&middot;&nbsp; Даша & Илья</div>
+</div>
+
+<div class="intro">
+    <h2>Критерии оценки</h2>
+    <p style="color: #6a7a8a; font-size: 0.9em; margin-bottom: 16px;">Каждый вариант оценивается по 6 параметрам. Итоговый балл — взвешенная сумма от 0 до 10.</p>
+    <div class="criteria-grid">
+        <div class="criteria-item">
+            <div class="icon">📍</div>
+            <div class="label">Локация</div>
+            <div class="weight">вес: 25%</div>
+        </div>
+        <div class="criteria-item">
+            <div class="icon">✨</div>
+            <div class="label">Ремонт / стиль</div>
+            <div class="weight">вес: 20%</div>
+        </div>
+        <div class="criteria-item">
+            <div class="icon">🌊</div>
+            <div class="label">Вид</div>
+            <div class="weight">вес: 15%</div>
+        </div>
+        <div class="criteria-item">
+            <div class="icon">📶</div>
+            <div class="label">Wi-Fi</div>
+            <div class="weight">вес: 15%</div>
+        </div>
+        <div class="criteria-item">
+            <div class="icon">🛏</div>
+            <div class="label">Комфорт / отдых</div>
+            <div class="weight">вес: 15%</div>
+        </div>
+        <div class="criteria-item">
+            <div class="icon">💰</div>
+            <div class="label">Цена</div>
+            <div class="weight">вес: 10%</div>
+        </div>
+    </div>
+</div>
+
+<div class="cards">
+
+    <!-- Card 1: HolidayHall -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">HolidayHall Samara 4*</div>
+                <div style="font-size: 0.85em; color: #5a7a9a; margin-top: 4px;">бывший Holiday Inn</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="card-price">~12 750 ₽ <small>/ 3 ночи</small></div>
+                <span class="card-type">Отель</span>
+            </div>
+        </div>
+        <div class="card-meta">
+            <span>ул. Алексея Толстого, 99</span>
+            <span>5 мин до набережной</span>
+            <span>~10 мин до Молодогвардейской</span>
+        </div>
+        <div class="scoring">
+            <h3>Скорринг</h3>
+            <div class="score-row">
+                <div class="score-label">Локация</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:85%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">8.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Ремонт / стиль</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:80%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">8.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Вид</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:60%; background: linear-gradient(90deg, #e0c040, #e8a020);"></div></div>
+                <div class="score-value" style="color:#e0c040;">6.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Wi-Fi</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:90%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Комфорт</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:85%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">8.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Цена</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:75%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">7.5</div>
+            </div>
+            <div class="total-score">
+                <div class="total-label">Итого <span class="winner-badge">Рекомендация</span></div>
+                <div class="total-value" style="color:#5cb885;">8.0</div>
+            </div>
+        </div>
+        <div class="card-analysis">
+            <h3>Анализ</h3>
+            <div class="pros-cons">
+                <ul class="pros">
+                    <li>Сетевой уровень сервиса (бывший Holiday Inn)</li>
+                    <li>Бассейн, сауна, фитнес — можно расслабиться</li>
+                    <li>Стабильный Wi-Fi гарантирован</li>
+                    <li>5 минут пешком до набережной</li>
+                    <li>Завтрак включён</li>
+                </ul>
+                <ul class="cons">
+                    <li>Вид на Волгу не из всех номеров</li>
+                    <li>Обстановка стандартная, без «вау-эффекта»</li>
+                    <li>Нужно уточнять тип кровати</li>
+                </ul>
+            </div>
+            <div class="verdict">Сбалансированный вариант: надёжный 4* отель с бассейном и спа, рядом с набережной. Идеален, если хочется отельный сервис и возможность расслабиться без сюрпризов.</div>
+        </div>
+    </div>
+
+    <!-- Card 2: Россия -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Гостиница «Россия» 3*</div>
+                <div style="font-size: 0.85em; color: #5a7a9a; margin-top: 4px;">прямо на набережной</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="card-price">~12 000 ₽ <small>/ 3 ночи</small></div>
+                <span class="card-type">Отель</span>
+            </div>
+        </div>
+        <div class="card-meta">
+            <span>ул. М. Горького, 82</span>
+            <span>На набережной Волги</span>
+            <span>~10 мин до Молодогвардейской</span>
+        </div>
+        <div class="scoring">
+            <h3>Скорринг</h3>
+            <div class="score-row">
+                <div class="score-label">Локация</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:90%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Ремонт / стиль</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:55%; background: linear-gradient(90deg, #e8a020, #e07a7a);"></div></div>
+                <div class="score-value" style="color:#e8a020;">5.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Вид</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:95%; background: linear-gradient(90deg, #5cb885, #5cb885);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Wi-Fi</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:65%; background: linear-gradient(90deg, #e0c040, #e8a020);"></div></div>
+                <div class="score-value" style="color:#e0c040;">6.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Комфорт</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:55%; background: linear-gradient(90deg, #e8a020, #e07a7a);"></div></div>
+                <div class="score-value" style="color:#e8a020;">5.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Цена</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:80%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">8.0</div>
+            </div>
+            <div class="total-score">
+                <div class="total-label">Итого</div>
+                <div class="total-value" style="color:#e0c040;">7.2</div>
+            </div>
+        </div>
+        <div class="card-analysis">
+            <h3>Анализ</h3>
+            <div class="pros-cons">
+                <ul class="pros">
+                    <li>Лучший вид из всех вариантов — панорама Волги</li>
+                    <li>Прямо на набережной, идеальная локация</li>
+                    <li>Панорамное кафе в отеле</li>
+                    <li>Адекватная цена за расположение</li>
+                </ul>
+                <ul class="cons">
+                    <li>3 звезды — ремонт может разочаровать</li>
+                    <li>Wi-Fi может быть нестабильным</li>
+                    <li>Уровень комфорта ниже, чем у 4*</li>
+                    <li>Шумоизоляция — типичная проблема</li>
+                </ul>
+            </div>
+            <div class="verdict">Максимальный вид на Волгу, но есть риск по качеству ремонта и Wi-Fi. Подойдёт, если вид — главный приоритет и вы готовы мириться с «советским шармом» в интерьере.</div>
+        </div>
+    </div>
+
+    <!-- Card 3: Grand London -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Grand London Apartment</div>
+                <div style="font-size: 0.85em; color: #5a7a9a; margin-top: 4px;">Суточно.ру &middot; рейтинг 9.8/10</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="card-price">~10 470 ₽ <small>/ 3 ночи</small></div>
+                <span class="card-type">Апартаменты</span>
+            </div>
+        </div>
+        <div class="card-meta">
+            <span>ул. Полевая, 71</span>
+            <span>60 м²</span>
+            <span>~15 мин до набережной</span>
+        </div>
+        <div class="scoring">
+            <h3>Скорринг</h3>
+            <div class="score-row">
+                <div class="score-label">Локация</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:65%; background: linear-gradient(90deg, #e0c040, #e8a020);"></div></div>
+                <div class="score-value" style="color:#e0c040;">6.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Ремонт / стиль</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:90%; background: linear-gradient(90deg, #5cb885, #5cb885);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Вид</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:30%; background: linear-gradient(90deg, #e07a7a, #e07a7a);"></div></div>
+                <div class="score-value" style="color:#e07a7a;">3.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Wi-Fi</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:85%; background: linear-gradient(90deg, #5cb885, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">8.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Комфорт</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:90%; background: linear-gradient(90deg, #5cb885, #5cb885);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Цена</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:90%; background: linear-gradient(90deg, #5cb885, #5cb885);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.0</div>
+            </div>
+            <div class="total-score">
+                <div class="total-label">Итого</div>
+                <div class="total-value" style="color:#7ab8f5;">7.5</div>
+            </div>
+        </div>
+        <div class="card-analysis">
+            <h3>Анализ</h3>
+            <div class="pros-cons">
+                <ul class="pros">
+                    <li>Рейтинг 9.8 из 10 (1500+ отзывов) — проверено</li>
+                    <li>60 м² — просторно, есть где расслабиться</li>
+                    <li>Отличный современный ремонт</li>
+                    <li>Кухня + стиральная машина</li>
+                    <li>Лучшая цена за качество</li>
+                </ul>
+                <ul class="cons">
+                    <li>Нет вида на Волгу</li>
+                    <li>15 мин до набережной (не критично, но дальше)</li>
+                    <li>Нет отельного сервиса (бассейн, завтрак)</li>
+                </ul>
+            </div>
+            <div class="verdict">Лучшее соотношение цена-качество. Просторная квартира с топ-рейтингом и свежим ремонтом. Если вид не принципиален — это самый комфортный вариант для жизни на 3 дня.</div>
+        </div>
+    </div>
+
+    <!-- Card 4: Молодогвардейская -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Квартира на Молодогвардейской</div>
+                <div style="font-size: 0.85em; color: #5a7a9a; margin-top: 4px;">Суточно.ру &middot; максимально близко к свадьбе</div>
+            </div>
+            <div style="text-align: right;">
+                <div class="card-price">~7 500 ₽ <small>/ 3 ночи</small></div>
+                <span class="card-type">Апартаменты</span>
+            </div>
+        </div>
+        <div class="card-meta">
+            <span>Молодогвардейская, 236</span>
+            <span>33 м²</span>
+            <span>пешком до места свадьбы</span>
+        </div>
+        <div class="scoring">
+            <h3>Скорринг</h3>
+            <div class="score-row">
+                <div class="score-label">Локация</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:95%; background: linear-gradient(90deg, #5cb885, #5cb885);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.5</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Ремонт / стиль</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:70%; background: linear-gradient(90deg, #e0c040, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">7.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Вид</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:40%; background: linear-gradient(90deg, #e07a7a, #e8a020);"></div></div>
+                <div class="score-value" style="color:#e8a020;">4.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Wi-Fi</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:70%; background: linear-gradient(90deg, #e0c040, #7ab8f5);"></div></div>
+                <div class="score-value" style="color:#7ab8f5;">7.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Комфорт</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:50%; background: linear-gradient(90deg, #e8a020, #e07a7a);"></div></div>
+                <div class="score-value" style="color:#e8a020;">5.0</div>
+            </div>
+            <div class="score-row">
+                <div class="score-label">Цена</div>
+                <div class="score-bar-bg"><div class="score-bar" style="width:95%; background: linear-gradient(90deg, #5cb885, #5cb885);"></div></div>
+                <div class="score-value" style="color:#5cb885;">9.5</div>
+            </div>
+            <div class="total-score">
+                <div class="total-label">Итого</div>
+                <div class="total-value" style="color:#e0c040;">7.0</div>
+            </div>
+        </div>
+        <div class="card-analysis">
+            <h3>Анализ</h3>
+            <div class="pros-cons">
+                <ul class="pros">
+                    <li>Идеальная локация — на той же улице, что и свадьба</li>
+                    <li>Самый бюджетный вариант</li>
+                    <li>Современный ремонт</li>
+                    <li>Рядом с набережной</li>
+                </ul>
+                <ul class="cons">
+                    <li>33 м² — тесновато для двоих на 3 дня</li>
+                    <li>Не факт, что двуспальная кровать</li>
+                    <li>Минимум пространства для отдыха</li>
+                    <li>Wi-Fi — нужно уточнять</li>
+                </ul>
+            </div>
+            <div class="verdict">Максимально удобно по расположению и бюджету, но компактная площадь не очень подходит под задачу «отдохнуть». Хороший вариант, если приоритет — близость к свадьбе и экономия.</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Summary -->
+<div class="summary">
+    <h2>Итоговый рейтинг</h2>
+
+    <div class="ranking">
+        <div class="rank-item first">
+            <div class="rank-position" style="color:#f0c040;">1</div>
+            <div class="rank-name">HolidayHall 4*</div>
+            <div class="rank-score" style="color:#5cb885;">8.0</div>
+        </div>
+        <div class="rank-item">
+            <div class="rank-position" style="color:#c0c0c0;">2</div>
+            <div class="rank-name">Grand London Apt</div>
+            <div class="rank-score" style="color:#7ab8f5;">7.5</div>
+        </div>
+        <div class="rank-item">
+            <div class="rank-position" style="color:#cd7f32;">3</div>
+            <div class="rank-name">Гостиница «Россия»</div>
+            <div class="rank-score" style="color:#e0c040;">7.2</div>
+        </div>
+        <div class="rank-item">
+            <div class="rank-position" style="color:#8a9bae;">4</div>
+            <div class="rank-name">Молодогвардейская</div>
+            <div class="rank-score" style="color:#e0c040;">7.0</div>
+        </div>
+    </div>
+
+    <p>Все варианты укладываются в бюджет 25 000 ₽ за 3 ночи. Лидер — <strong>HolidayHall</strong> за баланс комфорта, сервиса и локации. Если важнее простор и уют квартиры — <strong>Grand London</strong>.</p>
+    <p style="margin-top: 20px; color: #5a6a7a; font-size: 0.85em;">Даша & Илья &middot; Самара &middot; апрель 2026</p>
+</div>
+
+<footer>
+    Цены ориентировочные. Перед бронированием проверяйте актуальность на площадках.
+</footer>
+
+</body>
+</html>
