@@ -469,7 +469,7 @@
 
         ::selection { background: rgba(9,105,218,0.2); }
     </style>
-<!-- last-update: 24.03.2026 14:00 -->
+<!-- last-update: 24.03.2026 14:30 -->
 </head>
 <body>
 
@@ -941,7 +941,7 @@
         <div style="position:relative;">
         <img style="width:100%;height:220px;object-fit:cover;display:block;border-bottom:1px solid rgba(255,255,255,0.06);" src="img/times.jpg" alt="" onerror="this.parentElement.style.display='none'">
         <div style="position:absolute;bottom:8px;right:8px;">
-            <a style="padding:6px 12px;background:rgba(0,0,0,0.7);color:#5ca0d0;text-decoration:none;border-radius:8px;font-size:0.78em;backdrop-filter:blur(4px);" href="https://ostrovok.ru/hotel/russia/samara/mid9764600/times_3/" target="_blank">Фото &rarr;</a>
+            <a style="padding:6px 12px;background:rgba(0,0,0,0.7);color:#5ca0d0;text-decoration:none;border-radius:8px;font-size:0.78em;backdrop-filter:blur(4px);" href="https://ostrovok.ru/hotel/russia/samara/mid7467350/hotel_times/" target="_blank">Фото &rarr;</a>
         </div>
         </div>
         <div class="card-header">
@@ -1632,7 +1632,7 @@
                     <span><span class="badge-airline airline-nordstar">NordStar</span> Y7 4211</span>
                     <span>1ч 55мин</span><span>Прямой</span>
                     <span style="color: #5cb885; font-weight: 500;">Самый поздний</span>
-                <span style="color:#656d76;">&#9776; 10 кг</span></div>
+                <span style="color:#656d76;">&#9776; 10 кг, 55&times;40&times;20 см</span></div>
                 <div class="flight-like-row">
                     <button class="like-btn" data-hotel="Y74211" onclick="toggleLike('Y74211', 'Y7 4211 (22:35)')">
                         <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
@@ -2132,22 +2132,33 @@
     async function loadFromCloud() {
         try {
             const resp = await fetch(SYNC_URL);
-            if (resp.ok) {
-                const data = await resp.json();
-                // Мержим облако с локальными данными (не перезатираем)
-                const otherUser = currentUser === 'dasha' ? 'ilya' : 'dasha';
-                if (otherUser && data[otherUser]) {
-                    picks[otherUser] = data[otherUser].picks || [];
-                    dislikes[otherUser] = data[otherUser].dislikes || [];
+            if (!resp.ok) return;
+            const data = await resp.json();
+
+            // Для каждого пользователя мержим облако в локальные данные
+            ['dasha', 'ilya'].forEach(user => {
+                const cloudPicks = data[user]?.picks || [];
+                const cloudDislikes = data[user]?.dislikes || [];
+
+                if (user === currentUser) {
+                    // Свои данные: мержим (не перезатираем), локальные приоритетнее
+                    picks[user] = mergePicks(picks[user], cloudPicks);
+                    // Дизлайки тоже мержим
+                    cloudDislikes.forEach(id => {
+                        if (!dislikes[user].includes(id)) dislikes[user].push(id);
+                    });
+                } else {
+                    // Чужие данные: берём из облака (они авторитетны)
+                    if (cloudPicks.length > 0 || cloudDislikes.length > 0) {
+                        picks[user] = cloudPicks;
+                        dislikes[user] = cloudDislikes;
+                    }
                 }
-                // Свои лайки тоже мержим (если лайкал на другом устройстве)
-                if (currentUser && data[currentUser]) {
-                    picks[currentUser] = mergePicks(picks[currentUser], data[currentUser].picks || []);
-                }
-                saveLocal();
-                updateAllButtons();
-                updatePicksBar();
-            }
+            });
+
+            saveLocal();
+            updateAllButtons();
+            updatePicksBar();
         } catch(e) {}
     }
 
