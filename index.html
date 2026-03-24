@@ -366,6 +366,16 @@
         .tag-transport { background: #ddf4ff; color: #0969da; }
         .tag-sleep { background: #fbefff; color: #8250df; }
         .tag-important { background: #ffebe9; color: #cf222e; }
+        .day-tabs { display: flex; justify-content: center; gap: 6px; padding: 0 20px 10px; max-width: 900px; margin: 0 auto; }
+        .day-tab-btn {
+            padding: 8px 18px; border: 1px solid #e0dcd5; border-radius: 20px;
+            background: #faf8f5; color: #656d76; font-size: 0.85em; cursor: pointer;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .day-tab-btn:hover { border-color: #afb8c1; color: #1f2328; }
+        .day-tab-btn.active { background: #1f2328; color: #fff; border-color: #1f2328; }
+        .day-panel { display: none; }
+        .day-panel.active { display: block; }
         .coffee-pick {
             background: rgba(255,255,255,0.02); border: 1px solid #e0dcd5;
             border-radius: 12px; padding: 16px; margin-top: 12px;
@@ -448,6 +458,8 @@
             .event-time { min-width: auto; }
             .timeline { padding: 20px 12px; }
             .day-header { gap: 10px; }
+            .day-tabs { gap: 4px; padding: 0 12px 8px; }
+            .day-tab-btn { padding: 6px 12px; font-size: 0.78em; }
             .day-date { font-size: 0.82em; padding: 6px 12px; }
             .day-title { font-size: 1em; }
             .coffee-pick { padding: 12px; }
@@ -469,7 +481,7 @@
 
         ::selection { background: rgba(9,105,218,0.2); }
     </style>
-<!-- last-update: 24.03.2026 15:00 -->
+<!-- last-update: 24.03.2026 15:30 -->
 </head>
 <body>
 
@@ -1903,9 +1915,15 @@
         <span style="font-size:1.3em;">&#9888;</span>
         <span>Черновик — скорректирую после выбора жилья и билетов</span>
     </div>
-    <div class="timeline">
+    <div class="day-tabs">
+        <button class="day-tab-btn active" onclick="switchDay('thu')">Четверг</button>
+        <button class="day-tab-btn" onclick="switchDay('fri')">Пятница</button>
+        <button class="day-tab-btn" onclick="switchDay('sat')">Суббота</button>
+        <button class="day-tab-btn" onclick="switchDay('sun')">Воскресенье</button>
+    </div>
 
-        <!-- День 1: Четверг -->
+    <div id="day-thu" class="day-panel active">
+    <div class="timeline">
         <div class="day-block">
             <div class="day-header">
                 <span class="day-date">9 апреля, чт</span>
@@ -1936,12 +1954,23 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 
-        <!-- День 2: Пятница -->
+    <div id="day-fri" class="day-panel">
+
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:16px;">
+        <button class="day-tab-btn active" onclick="switchFriVariant('dayoff', this)" style="font-size:0.82em;padding:6px 14px;">Выходной</button>
+        <button class="day-tab-btn" onclick="switchFriVariant('workday', this)" style="font-size:0.82em;padding:6px 14px;">Рабочий день</button>
+    </div>
+
+    <!-- Вариант 1: Выходной -->
+    <div id="fri-dayoff" class="fri-variant" style="display:block;">
+    <div class="timeline">
         <div class="day-block">
             <div class="day-header">
                 <span class="day-date">10 апреля, пт</span>
-                <span class="day-title">Гуляем по городу</span>
+                <span class="day-title">Выходной — гуляем по городу</span>
             </div>
             <div class="event">
                 <div class="event-time">11:00</div>
@@ -2016,8 +2045,60 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 
-        <!-- День 3: Суббота -->
+    <!-- Вариант 2: Рабочий день -->
+    <div id="fri-workday" class="fri-variant" style="display:none;">
+    <div class="timeline">
+        <div class="day-block">
+            <div class="day-header">
+                <span class="day-date">10 апреля, пт</span>
+                <span class="day-title">Рабочий день + вечерняя прогулка</span>
+            </div>
+            <div class="event">
+                <div class="event-time">09:00</div>
+                <div class="event-content">
+                    <div class="event-title">Завтрак в кофейне</div>
+                    <div class="event-desc">Быстрый завтрак рядом с отелем, чтобы успеть к работе. White Cup, Алиса или Сойка — на выбор.</div>
+                    <span class="event-tag tag-food">завтрак</span>
+                </div>
+            </div>
+
+            <div class="event">
+                <div class="event-time">10:00–18:00</div>
+                <div class="event-content">
+                    <div class="event-title">Работаем удалённо</div>
+                    <div class="event-desc">Работаем из отеля (нужен стабильный Wi-Fi). Обед — заказать доставку или выйти в ближайшее кафе.</div>
+                    <span class="event-tag tag-sleep">работа</span>
+                </div>
+            </div>
+
+            <div class="event">
+                <div class="event-time">18:30</div>
+                <div class="event-content">
+                    <div class="event-title">Вечерняя прогулка по набережной</div>
+                    <div class="event-desc">Закат на Волге — отличный вариант после рабочего дня. Показать Илье набережную в вечернем свете.</div>
+                    <span class="event-tag tag-walk">прогулка</span>
+                </div>
+            </div>
+
+            <div class="event">
+                <div class="event-time">20:00</div>
+                <div class="event-content">
+                    <div class="event-title">Девичник / Мальчишник</div>
+                    <div class="event-desc">Вечер перед свадьбой. Даша — с Настей и девочками. Илья — с Михаилом и ребятами.</div>
+                    <span class="event-tag tag-event">свадьба</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    </div>
+
+    <div id="day-sat" class="day-panel">
+    <div class="timeline">
         <div class="day-block">
             <div class="day-header">
                 <span class="day-date">11 апреля, сб</span>
@@ -2048,8 +2129,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 
-        <!-- День 4: Воскресенье -->
+    <div id="day-sun" class="day-panel">
+    <div class="timeline">
         <div class="day-block">
             <div class="day-header">
                 <span class="day-date">12 апреля, вс</span>
@@ -2072,7 +2156,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
 
     <div class="summary">
@@ -2390,6 +2474,20 @@
         } else if (emptyMsg) {
             emptyMsg.style.display = 'none';
         }
+    }
+
+    function switchFriVariant(variant, btn) {
+        document.querySelectorAll('.fri-variant').forEach(el => el.style.display = 'none');
+        document.getElementById('fri-' + variant).style.display = 'block';
+        btn.parentElement.querySelectorAll('.day-tab-btn').forEach(el => el.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function switchDay(dayName) {
+        document.querySelectorAll('.day-panel').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.day-tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('day-' + dayName).classList.add('active');
+        event.target.classList.add('active');
     }
 
     function switchTab(tabName) {
