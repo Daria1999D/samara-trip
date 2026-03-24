@@ -54,6 +54,22 @@
         .updated {
             text-align: center; padding: 12px; color: #4a5a6a; font-size: 0.8em;
         }
+        .filter-bar {
+            display: flex; justify-content: center; gap: 8px; padding: 14px 16px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 7px 16px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03); color: #6a7a8a; font-size: 0.82em;
+            cursor: pointer; transition: all 0.3s; font-family: inherit;
+        }
+        .filter-btn:hover { background: rgba(255,255,255,0.06); color: #a8b8c8; }
+        .filter-btn.active-all { background: rgba(255,255,255,0.08); color: #e8e6e3; border-color: rgba(255,255,255,0.2); }
+        .filter-btn.active-dasha { background: rgba(233,30,99,0.12); color: #f48fb1; border-color: rgba(233,30,99,0.3); }
+        .filter-btn.active-ilya { background: rgba(100,180,255,0.12); color: #7ab8f5; border-color: rgba(100,180,255,0.3); }
+        .filter-btn.active-match { background: rgba(76,175,80,0.12); color: #81c784; border-color: rgba(76,175,80,0.3); }
+        .card.filter-hidden, .flight-card.filter-hidden { display: none; }
+
         .intro { max-width: 800px; margin: 0 auto; padding: 40px 20px 20px; }
         .intro h2 { font-size: 1.3em; font-weight: 400; margin-bottom: 12px; color: #c8d6e5; }
         .criteria-grid {
@@ -453,6 +469,13 @@
 <div class="updated" id="lastUpdated">Обновлено: загрузка...</div>
 
 <div id="tab-housing" class="tab-content active">
+
+<div class="filter-bar" id="filter-housing">
+    <button class="filter-btn active-all" onclick="setFilter('housing','all')">Все</button>
+    <button class="filter-btn" onclick="setFilter('housing','dasha')">Даша</button>
+    <button class="filter-btn" onclick="setFilter('housing','ilya')">Илья</button>
+    <button class="filter-btn" onclick="setFilter('housing','match')">Совпадения</button>
+</div>
 
 <div class="intro">
     <h2>Критерии оценки</h2>
@@ -1294,6 +1317,14 @@
 </div><!-- /tab-housing -->
 
 <div id="tab-flights" class="tab-content">
+
+    <div class="filter-bar" id="filter-flights">
+        <button class="filter-btn active-all" onclick="setFilter('flights','all')">Все</button>
+        <button class="filter-btn" onclick="setFilter('flights','dasha')">Даша</button>
+        <button class="filter-btn" onclick="setFilter('flights','ilya')">Илья</button>
+        <button class="filter-btn" onclick="setFilter('flights','match')">Совпадения</button>
+    </div>
+
     <div class="flight-section">
         <h2>Москва &rarr; Самара &middot; 9 апреля (четверг)</h2>
         <p style="color: #6a7a8a; font-size: 0.9em; margin-bottom: 20px;">Вылет вечером после работы. Перелёт ~1ч 50мин. Самара = МСК+1.</p>
@@ -1917,6 +1948,8 @@
             const card = btn.closest('.card') || btn.closest('.flight-card');
             if (card) card.classList.toggle('dimmed', isDisliked);
         });
+        applyFilter('housing');
+        applyFilter('flights');
     }
 
     function updatePicksBar() {
@@ -1961,6 +1994,45 @@
         document.getElementById('picksBar').classList.add('collapsed');
     }
     updatePicksBar();
+
+    let activeFilters = { housing: 'all', flights: 'all' };
+
+    function setFilter(section, filter) {
+        activeFilters[section] = filter;
+        const bar = document.getElementById('filter-' + section);
+        bar.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.className = 'filter-btn';
+        });
+        const idx = ['all','dasha','ilya','match'].indexOf(filter);
+        const classes = ['active-all','active-dasha','active-ilya','active-match'];
+        bar.querySelectorAll('.filter-btn')[idx].classList.add(classes[idx]);
+        applyFilter(section);
+    }
+
+    function applyFilter(section) {
+        const filter = activeFilters[section];
+        const container = section === 'housing' ? document.querySelector('.cards') : document.getElementById('tab-flights');
+        const cards = container.querySelectorAll(section === 'housing' ? '.card' : '.flight-card');
+
+        cards.forEach(card => {
+            const likeBtn = card.querySelector('.like-btn');
+            if (!likeBtn) { card.classList.remove('filter-hidden'); return; }
+            const hid = likeBtn.dataset.hotel;
+
+            if (filter === 'all') {
+                card.classList.remove('filter-hidden');
+            } else if (filter === 'dasha') {
+                const liked = picks.dasha.some(p => p.id === hid);
+                card.classList.toggle('filter-hidden', !liked);
+            } else if (filter === 'ilya') {
+                const liked = picks.ilya.some(p => p.id === hid);
+                card.classList.toggle('filter-hidden', !liked);
+            } else if (filter === 'match') {
+                const both = picks.dasha.some(p => p.id === hid) && picks.ilya.some(p => p.id === hid);
+                card.classList.toggle('filter-hidden', !both);
+            }
+        });
+    }
 
     function switchTab(tabName) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
