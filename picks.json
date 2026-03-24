@@ -1,1 +1,36 @@
-{"dasha":{"picks":[],"dislikes":[]},"ilya":{"picks":[],"dislikes":[]}}
+{
+  "dasha": {
+    "picks": [
+      {
+        "id": "holidayhall",
+        "name": "HolidayHall"
+      },
+      {
+        "id": "molodog213",
+        "name": "Молодогв. 213"
+      },
+      {
+        "id": "galaktionovskaya",
+        "name": "Галактионовская"
+      },
+      {
+        "id": "stilkomfort",
+        "name": "Стиль и Комфорт"
+      },
+      {
+        "id": "FV6061",
+        "name": "FV 6061 (06:25)"
+      }
+    ],
+    "dislikes": [
+      "vteme",
+      "grandlondon",
+      "hampton",
+      "nekrasovskaya"
+    ]
+  },
+  "ilya": {
+    "picks": [],
+    "dislikes": []
+  }
+}
