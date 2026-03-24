@@ -2097,9 +2097,8 @@
             </div>
         </div>
         <div class="picks-hint" id="matchHint"></div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
-            <button onclick="exportPicks()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#d4d0cc;font-size:0.82em;cursor:pointer;font-family:inherit;">Отправить мой выбор</button>
-            <button onclick="importPicks()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#d4d0cc;font-size:0.82em;cursor:pointer;font-family:inherit;">Получить выбор</button>
+        <div style="margin-top:12px;">
+            <button onclick="sharePicks()" id="shareBtn" style="padding:10px 24px;border-radius:8px;border:1px solid rgba(232,200,122,0.3);background:rgba(232,200,122,0.1);color:#e8c87a;font-size:0.85em;cursor:pointer;font-family:inherit;">Поделиться выбором</button>
         </div>
     </div>
 </div>
@@ -2121,63 +2120,42 @@
         localStorage.setItem('samara_dislikes', JSON.stringify(dislikes));
     }
 
-    // Экспорт/импорт выбора — для синхронизации между устройствами
-    function exportPicks() {
+    // Синхронизация: одна кнопка «Поделиться» → ссылка → второй открывает → видит оба выбора
+    function sharePicks() {
         if (!currentUser) { alert('Сначала выбери кто ты'); return; }
-        const data = { user: currentUser, picks: picks[currentUser], dislikes: dislikes[currentUser] };
-        const code = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-        const shortCode = code.replace(/=/g, '');
+        if (picks[currentUser].length === 0) { alert('Сначала отметь что нравится'); return; }
+        const data = { u: currentUser, p: picks[currentUser].map(p=>p.id+':'+p.name), d: dislikes[currentUser] };
+        const code = btoa(unescape(encodeURIComponent(JSON.stringify(data)))).replace(/=/g,'');
+        const url = window.location.origin + window.location.pathname + '?s=' + code;
 
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(shortCode).then(() => {
-                alert('Код скопирован! Отправь его ' + (currentUser === 'dasha' ? 'Илье' : 'Даше'));
+        if (navigator.share) {
+            navigator.share({ title: 'Мой выбор — Самара', url: url });
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(url).then(() => {
+                document.getElementById('shareBtn').textContent = 'Ссылка скопирована!';
+                setTimeout(() => { document.getElementById('shareBtn').textContent = 'Поделиться выбором'; }, 2000);
             });
         } else {
-            prompt('Скопируй этот код и отправь ' + (currentUser === 'dasha' ? 'Илье' : 'Даше') + ':', shortCode);
+            prompt('Скопируй ссылку:', url);
         }
     }
 
-    function importPicks() {
-        const code = prompt('Вставь код от ' + (currentUser === 'dasha' ? 'Ильи' : 'Даши') + ':');
+    // Автоимпорт при открытии ссылки
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get('s');
         if (!code) return;
         try {
             const padded = code + '='.repeat((4 - code.length % 4) % 4);
             const data = JSON.parse(decodeURIComponent(escape(atob(padded))));
-            if (data.user && data.picks) {
-                const otherUser = data.user;
-                if (otherUser === currentUser) {
-                    alert('Это твой собственный код! Нужен код от ' + (currentUser === 'dasha' ? 'Ильи' : 'Даши'));
-                    return;
-                }
-                picks[otherUser] = data.picks;
-                dislikes[otherUser] = data.dislikes || [];
+            if (data.u && data.p) {
+                const user = data.u;
+                picks[user] = data.p.map(s => { const [id,...rest] = s.split(':'); return {id, name: rest.join(':')}; });
+                dislikes[user] = data.d || [];
                 savePicks();
-                updateAllButtons();
-                updatePicksBar();
-                alert('Выбор ' + (otherUser === 'dasha' ? 'Даши' : 'Ильи') + ' загружен! Проверяй совпадения.');
             }
-        } catch(e) {
-            alert('Неверный код, попробуй ещё раз');
-        }
-    }
-
-    // Проверяем URL параметры для автоимпорта
-    (function checkUrlImport() {
-        const params = new URLSearchParams(window.location.search);
-        const importCode = params.get('sync');
-        if (importCode) {
-            try {
-                const padded = importCode + '='.repeat((4 - importCode.length % 4) % 4);
-                const data = JSON.parse(decodeURIComponent(escape(atob(padded))));
-                if (data.user && data.picks) {
-                    picks[data.user] = data.picks;
-                    dislikes[data.user] = data.dislikes || [];
-                    savePicks();
-                }
-            } catch(e) {}
-            // Clean URL
-            window.history.replaceState({}, '', window.location.pathname);
-        }
+        } catch(e) {}
+        window.history.replaceState({}, '', window.location.pathname);
     })();
 
     function setUser(user) {
