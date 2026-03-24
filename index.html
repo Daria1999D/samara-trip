@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Самара 9–12 апреля — выбираем жильё</title>
+    <title>Самара 9–12 апреля — планируем поездку</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -27,6 +27,25 @@
         }
         .hero h1 { font-size: 2.2em; font-weight: 300; letter-spacing: 0.02em; margin-bottom: 8px; position: relative; }
         .hero .subtitle { font-size: 1.1em; color: #8a9bae; font-weight: 300; position: relative; }
+
+        .tabs {
+            display: flex; justify-content: center; gap: 8px; padding: 20px 20px 0;
+            position: sticky; top: 0; z-index: 100;
+            background: #0f1923; border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .tab-btn {
+            padding: 12px 28px; border: 1px solid rgba(255,255,255,0.1); border-bottom: none;
+            border-radius: 12px 12px 0 0; background: rgba(255,255,255,0.03);
+            color: #6a7a8a; font-size: 0.95em; cursor: pointer; transition: all 0.3s;
+            font-family: inherit;
+        }
+        .tab-btn:hover { background: rgba(255,255,255,0.06); color: #a8b8c8; }
+        .tab-btn.active {
+            background: rgba(100,180,255,0.08); color: #7ab8f5;
+            border-color: rgba(100,180,255,0.2);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
         .hero .dates {
             display: inline-block; margin-top: 16px; padding: 8px 24px;
             border: 1px solid rgba(100,180,255,0.2); border-radius: 30px;
@@ -156,6 +175,46 @@
         .rank-name { font-size: 0.8em; color: #8a9bae; }
         .rank-score { font-size: 1.1em; font-weight: 500; margin-top: 4px; }
 
+        /* Flight cards */
+        .flight-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+            padding: 24px 28px; transition: border-color 0.3s;
+        }
+        .flight-card:hover { border-color: rgba(100,180,255,0.25); }
+        .flight-route {
+            display: flex; align-items: center; gap: 20px; margin-bottom: 16px; flex-wrap: wrap;
+        }
+        .flight-time { font-size: 1.8em; font-weight: 600; color: #e8e6e3; }
+        .flight-arrow { color: #4a5a6a; font-size: 1.2em; }
+        .flight-city { font-size: 0.85em; color: #6a7a8a; }
+        .flight-details {
+            display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.88em; color: #8a9bae;
+        }
+        .flight-details span { display: flex; align-items: center; gap: 6px; }
+        .flight-price-tag {
+            font-size: 1.3em; font-weight: 600; color: #5cb885; margin-left: auto;
+        }
+        .flight-section { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+        .flight-section h2 {
+            font-size: 1.2em; font-weight: 400; color: #c8d6e5; margin-bottom: 16px;
+            padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .flight-grid { display: flex; flex-direction: column; gap: 16px; }
+        .flight-links { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .flight-note {
+            text-align: center; padding: 20px; color: #5a6a7a; font-size: 0.85em;
+            font-style: italic;
+        }
+        .badge-airline {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            font-size: 0.75em; font-weight: 500;
+        }
+        .airline-aeroflot { background: rgba(0,98,179,0.15); color: #4da6ff; }
+        .airline-pobeda { background: rgba(255,107,0,0.15); color: #ff8c42; }
+        .airline-s7 { background: rgba(108,190,69,0.15); color: #7ecc5e; }
+        .airline-nordstar { background: rgba(178,34,34,0.15); color: #e06060; }
+
         footer { text-align: center; padding: 40px 20px; color: #3a4a5a; font-size: 0.8em; }
 
         @media (max-width: 600px) {
@@ -178,7 +237,15 @@
     <div class="dates">9 – 12 апреля 2026 &middot; 3 ночи &middot; Даша & Илья</div>
 </div>
 
+<div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('housing')">Жильё</button>
+    <button class="tab-btn" onclick="switchTab('flights')">Авиабилеты</button>
+    <button class="tab-btn" onclick="switchTab('activities')">Активности</button>
+</div>
+
 <div class="updated" id="lastUpdated">Обновлено: загрузка...</div>
+
+<div id="tab-housing" class="tab-content active">
 
 <div class="intro">
     <h2>Критерии оценки</h2>
@@ -660,6 +727,199 @@
     <p style="margin-top: 20px; color: #5a6a7a; font-size: 0.85em;">Даша & Илья &middot; Самара &middot; апрель 2026</p>
 </div>
 
+</div><!-- /tab-housing -->
+
+<div id="tab-flights" class="tab-content">
+    <div class="flight-section">
+        <h2>Москва &rarr; Самара &middot; 9 апреля (четверг)</h2>
+        <p style="color: #6a7a8a; font-size: 0.9em; margin-bottom: 20px;">Вылет вечером после работы. Перелёт ~1ч 50мин. Самара = МСК+1.</p>
+        <div class="flight-grid">
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div>
+                        <div class="flight-time">15:55</div>
+                        <div class="flight-city">Домодедово (DME)</div>
+                    </div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div>
+                        <div class="flight-time">18:50</div>
+                        <div class="flight-city">Курумоч (KUF)</div>
+                    </div>
+                    <div class="flight-price-tag">~3 829 ₽</div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-s7">S7</span> S7 1073</span>
+                    <span>1ч 55мин</span>
+                    <span>Прямой рейс</span>
+                </div>
+                <div class="flight-links">
+                    <a href="https://www.s7.ru/ru/flight/from/MOW/to/KUF/" target="_blank" class="btn-book secondary">S7 Airlines <span class="arrow">&rarr;</span></a>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div>
+                        <div class="flight-time">15:40</div>
+                        <div class="flight-city">Шереметьево (SVO)</div>
+                    </div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div>
+                        <div class="flight-time">18:25</div>
+                        <div class="flight-city">Курумоч (KUF)</div>
+                    </div>
+                    <div class="flight-price-tag">~2 830 ₽</div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-pobeda">Победа</span> DP 6581</span>
+                    <span>1ч 45мин</span>
+                    <span>Прямой рейс</span>
+                </div>
+                <div class="flight-links">
+                    <a href="https://www.flypobeda.ru/flights/MOW/KUF" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
+                </div>
+            </div>
+
+            <div class="flight-card" style="border-color: rgba(92,184,133,0.25);">
+                <div class="flight-route">
+                    <div>
+                        <div class="flight-time">19:35</div>
+                        <div class="flight-city">Домодедово (DME)</div>
+                    </div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div>
+                        <div class="flight-time">21:30</div>
+                        <div class="flight-city">Курумоч (KUF)</div>
+                    </div>
+                    <div class="flight-price-tag">~3 434 ₽</div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-nordstar">NordStar</span> Y7 4211</span>
+                    <span>1ч 55мин</span>
+                    <span>Прямой рейс</span>
+                    <span style="color: #5cb885; font-weight: 500;">Подходит по времени</span>
+                </div>
+                <div class="flight-links">
+                    <a href="https://avia.tutu.ru/f/Moskva/Samara/?date=09.04.2026" target="_blank" class="btn-book primary">Купить на Туту <span class="arrow">&rarr;</span></a>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div>
+                        <div class="flight-time">06:30</div>
+                        <div class="flight-city">Шереметьево (SVO)</div>
+                    </div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div>
+                        <div class="flight-time">09:25</div>
+                        <div class="flight-city">Курумоч (KUF)</div>
+                    </div>
+                    <div class="flight-price-tag">~4 265 ₽</div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1602</span>
+                    <span>1ч 55мин</span>
+                    <span>Прямой рейс</span>
+                </div>
+                <div class="flight-links">
+                    <a href="https://avia.tutu.ru/f/Moskva/Samara/Aeroflot/?date=09.04.2026" target="_blank" class="btn-book secondary">Аэрофлот <span class="arrow">&rarr;</span></a>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div>
+                        <div class="flight-time">12:40</div>
+                        <div class="flight-city">Внуково (VKO)</div>
+                    </div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div>
+                        <div class="flight-time">15:30</div>
+                        <div class="flight-city">Курумоч (KUF)</div>
+                    </div>
+                    <div class="flight-price-tag">~2 830 ₽</div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-pobeda">Победа</span> DP 421</span>
+                    <span>1ч 50мин</span>
+                    <span>Прямой рейс</span>
+                </div>
+                <div class="flight-links">
+                    <a href="https://www.flypobeda.ru/flights/MOW/KUF" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
+                </div>
+            </div>
+
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div>
+                        <div class="flight-time">13:15</div>
+                        <div class="flight-city">Шереметьево (SVO)</div>
+                    </div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div>
+                        <div class="flight-time">16:10</div>
+                        <div class="flight-city">Курумоч (KUF)</div>
+                    </div>
+                    <div class="flight-price-tag">~4 265 ₽</div>
+                </div>
+                <div class="flight-details">
+                    <span><span class="badge-airline airline-aeroflot">Аэрофлот</span> SU 1606</span>
+                    <span>1ч 55мин</span>
+                    <span>Прямой рейс</span>
+                </div>
+                <div class="flight-links">
+                    <a href="https://avia.tutu.ru/f/Moskva/Samara/Aeroflot/?date=09.04.2026" target="_blank" class="btn-book secondary">Аэрофлот <span class="arrow">&rarr;</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flight-section">
+        <h2>Самара &rarr; Москва &middot; 12 апреля (воскресенье)</h2>
+        <p style="color: #6a7a8a; font-size: 0.9em; margin-bottom: 20px;">Обратный рейс. Рейсы ежедневные, выбирайте удобное время.</p>
+        <div class="flight-grid">
+            <div class="flight-card">
+                <div class="flight-route">
+                    <div>
+                        <div class="flight-time">Утро / день / вечер</div>
+                        <div class="flight-city">Курумоч (KUF)</div>
+                    </div>
+                    <div class="flight-arrow">&rarr;</div>
+                    <div>
+                        <div class="flight-time">+1ч 50мин</div>
+                        <div class="flight-city">Москва</div>
+                    </div>
+                    <div class="flight-price-tag">от 2 279 ₽</div>
+                </div>
+                <div class="flight-details">
+                    <span>Аэрофлот, Победа, S7, ЮТэйр, NordStar</span>
+                </div>
+                <div class="flight-links">
+                    <a href="https://avia.tutu.ru/f/Samara/Moskva/?date=12.04.2026" target="_blank" class="btn-book primary">Все рейсы на Туту <span class="arrow">&rarr;</span></a>
+                    <a href="https://rasp.yandex.ru/plane/samara--moscow?when=2026-04-12" target="_blank" class="btn-book secondary">Я.Расписание <span class="arrow">&rarr;</span></a>
+                    <a href="https://www.flypobeda.ru/flights/KUF/MOW" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="flight-note">Расписание обратных рейсов обновится ближе к дате. Рекомендуем бронировать билеты туда-обратно одновременно — так дешевле.</div>
+    </div>
+
+    <div class="summary">
+        <h2>Рекомендация по билетам</h2>
+        <p>Лучший вариант туда — <strong>NordStar Y7 4211, вылет 19:35</strong> из Домодедово. Прилёт в 21:30 по самарскому времени. Цена ~3 434 ₽/чел. Успеете после работы.</p>
+        <p style="margin-top: 12px;">Итого билеты на двоих (туда-обратно): <strong>~12 000–14 000 ₽</strong></p>
+    </div>
+</div><!-- /tab-flights -->
+
+<div id="tab-activities" class="tab-content">
+    <div class="summary" style="padding-top: 60px;">
+        <h2>Активности в Самаре</h2>
+        <p>Этот раздел скоро заполнится. Здесь будут: маршруты по городу, любимые места Даши, кафе и рестораны, набережная Волги.</p>
+        <p style="margin-top: 16px; color: #5a6a7a;">Скажи, и я добавлю сюда всё, что хочешь показать Илье.</p>
+    </div>
+</div><!-- /tab-activities -->
+
 <footer>
     Цены ориентировочные. Перед бронированием проверяйте актуальность на площадках.
 </footer>
@@ -670,6 +930,14 @@
             day: 'numeric', month: 'long', year: 'numeric',
             hour: '2-digit', minute: '2-digit'
         });
+
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + tabName).classList.add('active');
+        event.target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 </script>
 
 </body>
