@@ -2115,20 +2115,36 @@
             hour: '2-digit', minute: '2-digit'
         });
 
-    // --- Система выбора (облачная синхронизация) ---
+    // --- Система выбора (localStorage + облако) ---
     const SYNC_URL = 'https://jsonblob.com/api/jsonBlob/019d202d-28f3-70b3-a05a-abd0250593ba';
     let currentUser = localStorage.getItem('samara_user') || null;
-    let picks = {dasha:[], ilya:[]};
-    let dislikes = {dasha:[], ilya:[]};
+    let picks = JSON.parse(localStorage.getItem('samara_picks') || '{"dasha":[],"ilya":[]}');
+    let dislikes = JSON.parse(localStorage.getItem('samara_dislikes') || '{"dasha":[],"ilya":[]}');
     let syncing = false;
+
+    function mergePicks(local, cloud) {
+        // Мержим: добавляем из облака то, чего нет локально
+        const ids = new Set(local.map(p => p.id));
+        cloud.forEach(p => { if (!ids.has(p.id)) local.push(p); });
+        return local;
+    }
 
     async function loadFromCloud() {
         try {
             const resp = await fetch(SYNC_URL);
             if (resp.ok) {
                 const data = await resp.json();
-                picks = {dasha: data.dasha?.picks || [], ilya: data.ilya?.picks || []};
-                dislikes = {dasha: data.dasha?.dislikes || [], ilya: data.ilya?.dislikes || []};
+                // Мержим облако с локальными данными (не перезатираем)
+                const otherUser = currentUser === 'dasha' ? 'ilya' : 'dasha';
+                if (otherUser && data[otherUser]) {
+                    picks[otherUser] = data[otherUser].picks || [];
+                    dislikes[otherUser] = data[otherUser].dislikes || [];
+                }
+                // Свои лайки тоже мержим (если лайкал на другом устройстве)
+                if (currentUser && data[currentUser]) {
+                    picks[currentUser] = mergePicks(picks[currentUser], data[currentUser].picks || []);
+                }
+                saveLocal();
                 updateAllButtons();
                 updatePicksBar();
             }
@@ -2139,24 +2155,37 @@
         if (syncing) return;
         syncing = true;
         try {
+            // Сначала читаем актуальные данные из облака
+            const resp = await fetch(SYNC_URL);
+            let cloudData = {dasha:{picks:[],dislikes:[]}, ilya:{picks:[],dislikes:[]}};
+            if (resp.ok) cloudData = await resp.json();
+
+            // Обновляем только своего пользователя
+            if (currentUser) {
+                cloudData[currentUser] = {picks: picks[currentUser], dislikes: dislikes[currentUser]};
+            }
             await fetch(SYNC_URL, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    dasha: {picks: picks.dasha, dislikes: dislikes.dasha},
-                    ilya: {picks: picks.ilya, dislikes: dislikes.ilya}
-                })
+                body: JSON.stringify(cloudData)
             });
         } catch(e) {}
         syncing = false;
     }
 
-    let saveTimer = null;
-    function savePicks() {
-        clearTimeout(saveTimer);
-        saveTimer = setTimeout(saveToCloud, 800);
+    function saveLocal() {
+        localStorage.setItem('samara_picks', JSON.stringify(picks));
+        localStorage.setItem('samara_dislikes', JSON.stringify(dislikes));
     }
 
+    let saveTimer = null;
+    function savePicks() {
+        saveLocal();
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(saveToCloud, 500);
+    }
+
+    // Подгружаем из облака каждые 10 сек
     setInterval(loadFromCloud, 10000);
     loadFromCloud();
 
