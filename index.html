@@ -108,6 +108,20 @@
         }
         .like-btn .heart { font-size: 1.1em; transition: transform 0.3s; }
         .like-btn.liked .heart { transform: scale(1.2); }
+        .dislike-btn {
+            display: flex; align-items: center; gap: 6px; padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
+            background: rgba(255,255,255,0.04); color: #6a7a8a;
+            font-size: 0.85em; cursor: pointer; transition: all 0.3s;
+            font-family: inherit;
+        }
+        .dislike-btn:hover { border-color: rgba(244,67,54,0.3); color: #e07a7a; }
+        .dislike-btn.disliked {
+            background: rgba(244,67,54,0.1); border-color: rgba(244,67,54,0.3);
+            color: #e07a7a; text-decoration: line-through;
+        }
+        .card.dimmed { opacity: 0.4; }
+        .flight-like-row { display: flex; gap: 8px; margin-top: 12px; }
 
         .picks-bar {
             position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
@@ -514,6 +528,9 @@
             <button class="like-btn" data-hotel="letyagin" onclick="toggleLike('letyagin', 'ЛетягинЪ')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
             </button>
+            <button class="dislike-btn" data-hotel="letyagin" onclick="toggleDislike('letyagin')">
+                &#10005; Не нравится
+            </button>
         </div>
     </div>
 
@@ -573,6 +590,9 @@
             <button class="like-btn" data-hotel="holidayhall" onclick="toggleLike('holidayhall', 'HolidayHall')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
             </button>
+            <button class="dislike-btn" data-hotel="holidayhall" onclick="toggleDislike('holidayhall')">
+                &#10005; Не нравится
+            </button>
         </div>
     </div>
 
@@ -631,6 +651,9 @@
             <button class="like-btn" data-hotel="vteme" onclick="toggleLike('vteme', 'В Теме')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
             </button>
+            <button class="dislike-btn" data-hotel="vteme" onclick="toggleDislike('vteme')">
+                &#10005; Не нравится
+            </button>
         </div>
     </div>
 
@@ -686,6 +709,9 @@
         <div class="like-row">
             <button class="like-btn" data-hotel="grandlondon" onclick="toggleLike('grandlondon', 'Grand London')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+            <button class="dislike-btn" data-hotel="grandlondon" onclick="toggleDislike('grandlondon')">
+                &#10005; Не нравится
             </button>
         </div>
     </div>
@@ -745,6 +771,9 @@
             <button class="like-btn" data-hotel="hampton" onclick="toggleLike('hampton', 'Hampton')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
             </button>
+            <button class="dislike-btn" data-hotel="hampton" onclick="toggleDislike('hampton')">
+                &#10005; Не нравится
+            </button>
         </div>
     </div>
 
@@ -800,6 +829,9 @@
         <div class="like-row">
             <button class="like-btn" data-hotel="nekrasovskaya" onclick="toggleLike('nekrasovskaya', 'Некрасовская')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+            <button class="dislike-btn" data-hotel="nekrasovskaya" onclick="toggleDislike('nekrasovskaya')">
+                &#10005; Не нравится
             </button>
         </div>
     </div>
@@ -859,6 +891,9 @@
             <button class="like-btn" data-hotel="rossia" onclick="toggleLike('rossia', 'Россия')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
             </button>
+            <button class="dislike-btn" data-hotel="rossia" onclick="toggleDislike('rossia')">
+                &#10005; Не нравится
+            </button>
         </div>
     </div>
 
@@ -914,6 +949,9 @@
         <div class="like-row">
             <button class="like-btn" data-hotel="times" onclick="toggleLike('times', 'Times')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+            <button class="dislike-btn" data-hotel="times" onclick="toggleDislike('times')">
+                &#10005; Не нравится
             </button>
         </div>
     </div>
@@ -971,6 +1009,9 @@
         <div class="like-row">
             <button class="like-btn" data-hotel="molodog213" onclick="toggleLike('molodog213', 'Молодогв. 213')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+            <button class="dislike-btn" data-hotel="molodog213" onclick="toggleDislike('molodog213')">
+                &#10005; Не нравится
             </button>
         </div>
     </div>
@@ -1033,6 +1074,9 @@
             <button class="like-btn" data-hotel="galaktionovskaya" onclick="toggleLike('galaktionovskaya', 'Галактионовская')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
             </button>
+            <button class="dislike-btn" data-hotel="galaktionovskaya" onclick="toggleDislike('galaktionovskaya')">
+                &#10005; Не нравится
+            </button>
         </div>
     </div>
 
@@ -1093,6 +1137,9 @@
             <button class="like-btn" data-hotel="stilkomfort" onclick="toggleLike('stilkomfort', 'Стиль и Комфорт')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
             </button>
+            <button class="dislike-btn" data-hotel="stilkomfort" onclick="toggleDislike('stilkomfort')">
+                &#10005; Не нравится
+            </button>
         </div>
     </div>
 
@@ -1149,6 +1196,9 @@
         <div class="like-row">
             <button class="like-btn" data-hotel="apartin" onclick="toggleLike('apartin', 'Apartin')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+            <button class="dislike-btn" data-hotel="apartin" onclick="toggleDislike('apartin')">
+                &#10005; Не нравится
             </button>
         </div>
     </div>
@@ -1209,6 +1259,9 @@
         <div class="like-row">
             <button class="like-btn" data-hotel="vgosti" onclick="toggleLike('vgosti', 'V-GOSTI Видовые')">
                 <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+            <button class="dislike-btn" data-hotel="vgosti" onclick="toggleDislike('vgosti')">
+                &#10005; Не нравится
             </button>
         </div>
     </div>
@@ -1292,6 +1345,14 @@
                 <div class="flight-links">
                     <a href="https://www.s7.ru/ru/flight/from/MOW/to/KUF/" target="_blank" class="btn-book secondary">S7 Airlines <span class="arrow">&rarr;</span></a>
                 </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="s71073" onclick="toggleLike('s71073', 'S7 1073 (15:55)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="s71073" onclick="toggleDislike('s71073')">
+                        &#10005; Нет
+                    </button>
+                </div>
             </div>
 
             <div class="flight-card">
@@ -1314,6 +1375,14 @@
                 </div>
                 <div class="flight-links">
                     <a href="https://www.flypobeda.ru/flights/MOW/KUF" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="dp6581" onclick="toggleLike('dp6581', 'DP 6581 (15:40)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="dp6581" onclick="toggleDislike('dp6581')">
+                        &#10005; Нет
+                    </button>
                 </div>
             </div>
 
@@ -1339,6 +1408,14 @@
                 <div class="flight-links">
                     <a href="https://avia.tutu.ru/f/Moskva/Samara/?date=09.04.2026" target="_blank" class="btn-book primary">Купить на Туту <span class="arrow">&rarr;</span></a>
                 </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="y74211" onclick="toggleLike('y74211', 'Y7 4211 (19:35)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="y74211" onclick="toggleDislike('y74211')">
+                        &#10005; Нет
+                    </button>
+                </div>
             </div>
 
             <div class="flight-card">
@@ -1361,6 +1438,14 @@
                 </div>
                 <div class="flight-links">
                     <a href="https://avia.tutu.ru/f/Moskva/Samara/Aeroflot/?date=09.04.2026" target="_blank" class="btn-book secondary">Аэрофлот <span class="arrow">&rarr;</span></a>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="su1602" onclick="toggleLike('su1602', 'SU 1602 (06:30)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="su1602" onclick="toggleDislike('su1602')">
+                        &#10005; Нет
+                    </button>
                 </div>
             </div>
 
@@ -1385,6 +1470,14 @@
                 <div class="flight-links">
                     <a href="https://www.flypobeda.ru/flights/MOW/KUF" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
                 </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="dp421" onclick="toggleLike('dp421', 'DP 421 (12:40)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="dp421" onclick="toggleDislike('dp421')">
+                        &#10005; Нет
+                    </button>
+                </div>
             </div>
 
             <div class="flight-card">
@@ -1407,6 +1500,14 @@
                 </div>
                 <div class="flight-links">
                     <a href="https://avia.tutu.ru/f/Moskva/Samara/Aeroflot/?date=09.04.2026" target="_blank" class="btn-book secondary">Аэрофлот <span class="arrow">&rarr;</span></a>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="su1606" onclick="toggleLike('su1606', 'SU 1606 (13:15)')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="su1606" onclick="toggleDislike('su1606')">
+                        &#10005; Нет
+                    </button>
                 </div>
             </div>
         </div>
@@ -1436,6 +1537,14 @@
                     <a href="https://avia.tutu.ru/f/Samara/Moskva/?date=12.04.2026" target="_blank" class="btn-book primary">Все рейсы на Туту <span class="arrow">&rarr;</span></a>
                     <a href="https://rasp.yandex.ru/plane/samara--moscow?when=2026-04-12" target="_blank" class="btn-book secondary">Я.Расписание <span class="arrow">&rarr;</span></a>
                     <a href="https://www.flypobeda.ru/flights/KUF/MOW" target="_blank" class="btn-book secondary">Победа <span class="arrow">&rarr;</span></a>
+                </div>
+                <div class="flight-like-row">
+                    <button class="like-btn" data-hotel="return" onclick="toggleLike('return', 'Обратный рейс')">
+                        <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+                    </button>
+                    <button class="dislike-btn" data-hotel="return" onclick="toggleDislike('return')">
+                        &#10005; Нет
+                    </button>
                 </div>
             </div>
         </div>
@@ -1694,6 +1803,22 @@
         updatePicksBar();
     }
 
+    let dislikes = JSON.parse(localStorage.getItem('samara_dislikes') || '{"dasha":[],"ilya":[]}');
+
+    function toggleDislike(hotelId) {
+        if (!currentUser) { alert('Сначала выбери кто ты — Даша или Илья'); return; }
+        const idx = dislikes[currentUser].indexOf(hotelId);
+        if (idx >= 0) { dislikes[currentUser].splice(idx, 1); }
+        else {
+            dislikes[currentUser].push(hotelId);
+            picks[currentUser] = picks[currentUser].filter(p => p.id !== hotelId);
+            localStorage.setItem('samara_picks', JSON.stringify(picks));
+        }
+        localStorage.setItem('samara_dislikes', JSON.stringify(dislikes));
+        updateAllButtons();
+        updatePicksBar();
+    }
+
     function removePick(user, hotelId) {
         picks[user] = picks[user].filter(p => p.id !== hotelId);
         localStorage.setItem('samara_picks', JSON.stringify(picks));
@@ -1710,6 +1835,13 @@
             btn.classList.toggle('ilya', currentUser === 'ilya');
             btn.querySelector('.heart').innerHTML = isLiked ? '&#9829;' : '&#9825;';
             btn.querySelector('.like-text').textContent = isLiked ? 'Выбрано' : 'Нравится';
+        });
+        document.querySelectorAll('.dislike-btn').forEach(btn => {
+            const hid = btn.dataset.hotel;
+            const isDisliked = currentUser && dislikes[currentUser].includes(hid);
+            btn.classList.toggle('disliked', isDisliked);
+            const card = btn.closest('.card') || btn.closest('.flight-card');
+            if (card) card.classList.toggle('dimmed', isDisliked);
         });
     }
 
