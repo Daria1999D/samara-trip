@@ -113,12 +113,24 @@
             position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
             background: rgba(15,25,35,0.95); backdrop-filter: blur(12px);
             border-top: 1px solid rgba(100,180,255,0.15);
-            padding: 16px 20px; display: none; text-align: center;
+            padding: 0; display: none; text-align: center;
+            transition: max-height 0.3s ease;
         }
         .picks-bar.visible { display: block; }
+        .picks-bar .picks-toggle {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px 20px; cursor: pointer; user-select: none;
+        }
+        .picks-bar .picks-toggle:hover { background: rgba(255,255,255,0.03); }
+        .picks-bar .picks-toggle .arrow-icon {
+            transition: transform 0.3s; font-size: 0.8em; color: #5a7a9a;
+        }
+        .picks-bar.collapsed .picks-toggle .arrow-icon { transform: rotate(180deg); }
+        .picks-bar.collapsed .picks-body { display: none; }
+        .picks-bar .picks-body { padding: 0 20px 16px; }
         .picks-bar h3 {
             font-size: 0.85em; color: #5a7a9a; text-transform: uppercase;
-            letter-spacing: 0.1em; margin-bottom: 10px; font-weight: 400;
+            letter-spacing: 0.1em; margin: 0; font-weight: 400;
         }
         .picks-columns {
             display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
@@ -1627,18 +1639,23 @@
 </footer>
 
 <div class="picks-bar" id="picksBar">
-    <h3>Выбранные варианты</h3>
-    <div class="picks-columns">
-        <div class="picks-column">
-            <div class="picks-column-title dasha">Даша</div>
-            <div class="picks-list" id="picks-dasha"></div>
-        </div>
-        <div class="picks-column">
-            <div class="picks-column-title ilya">Илья</div>
-            <div class="picks-list" id="picks-ilya"></div>
-        </div>
+    <div class="picks-toggle" onclick="togglePicksBar()">
+        <h3>Выбранные варианты</h3>
+        <span class="arrow-icon">&#9650;</span>
     </div>
-    <div class="picks-hint" id="matchHint"></div>
+    <div class="picks-body">
+        <div class="picks-columns">
+            <div class="picks-column">
+                <div class="picks-column-title dasha">Даша</div>
+                <div class="picks-list" id="picks-dasha"></div>
+            </div>
+            <div class="picks-column">
+                <div class="picks-column-title ilya">Илья</div>
+                <div class="picks-list" id="picks-ilya"></div>
+            </div>
+        </div>
+        <div class="picks-hint" id="matchHint"></div>
+    </div>
 </div>
 
 <script>
@@ -1728,7 +1745,15 @@
         }
     }
 
+    function togglePicksBar() {
+        document.getElementById('picksBar').classList.toggle('collapsed');
+        localStorage.setItem('samara_picks_collapsed', document.getElementById('picksBar').classList.contains('collapsed'));
+    }
+
     if (currentUser) setUser(currentUser);
+    if (localStorage.getItem('samara_picks_collapsed') === 'true') {
+        document.getElementById('picksBar').classList.add('collapsed');
+    }
     updatePicksBar();
 
     function switchTab(tabName) {
