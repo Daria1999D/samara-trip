@@ -94,6 +94,95 @@
             background: rgba(100,180,255,0.1); border-color: rgba(100,180,255,0.4);
         }
 
+        .like-btn {
+            display: flex; align-items: center; gap: 8px; padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
+            background: rgba(255,255,255,0.04); color: #8a9bae;
+            font-size: 0.9em; cursor: pointer; transition: all 0.3s;
+            font-family: inherit;
+        }
+        .like-btn:hover { border-color: rgba(233,30,99,0.3); color: #f48fb1; }
+        .like-btn.liked {
+            background: rgba(233,30,99,0.12); border-color: rgba(233,30,99,0.35);
+            color: #f48fb1;
+        }
+        .like-btn .heart { font-size: 1.1em; transition: transform 0.3s; }
+        .like-btn.liked .heart { transform: scale(1.2); }
+
+        .picks-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+            background: rgba(15,25,35,0.95); backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(100,180,255,0.15);
+            padding: 16px 20px; display: none; text-align: center;
+        }
+        .picks-bar.visible { display: block; }
+        .picks-bar h3 {
+            font-size: 0.85em; color: #5a7a9a; text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 10px; font-weight: 400;
+        }
+        .picks-columns {
+            display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+        }
+        .picks-column { min-width: 140px; }
+        .picks-column-title {
+            font-size: 0.85em; font-weight: 500; margin-bottom: 8px;
+            padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .picks-column-title.dasha { color: #f48fb1; }
+        .picks-column-title.ilya { color: #7ab8f5; }
+        .picks-list {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .pick-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 16px; font-size: 0.82em;
+        }
+        .pick-chip.dasha {
+            background: rgba(233,30,99,0.1); border: 1px solid rgba(233,30,99,0.2);
+            color: #f48fb1;
+        }
+        .pick-chip.ilya {
+            background: rgba(100,180,255,0.1); border: 1px solid rgba(100,180,255,0.2);
+            color: #7ab8f5;
+        }
+        .pick-chip .remove {
+            cursor: pointer; opacity: 0.6; font-size: 1em; margin-left: 4px;
+        }
+        .pick-chip .remove:hover { opacity: 1; }
+        .picks-bar .picks-hint {
+            font-size: 0.78em; color: #4a5a6a; margin-top: 10px;
+        }
+        .match-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            background: rgba(76,175,80,0.15); color: #81c784;
+            font-size: 0.75em; font-weight: 500; margin-left: 6px;
+        }
+        .like-row { display: flex; gap: 8px; padding: 0 28px 16px; }
+        .like-btn.dasha { }
+        .like-btn.dasha.liked {
+            background: rgba(233,30,99,0.12); border-color: rgba(233,30,99,0.35);
+            color: #f48fb1;
+        }
+        .like-btn.ilya.liked {
+            background: rgba(100,180,255,0.12); border-color: rgba(100,180,255,0.35);
+            color: #7ab8f5;
+        }
+        .user-picker {
+            display: flex; justify-content: center; gap: 12px; padding: 16px 20px;
+            background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .user-picker button {
+            padding: 8px 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04); color: #6a7a8a;
+            font-size: 0.9em; cursor: pointer; transition: all 0.3s; font-family: inherit;
+        }
+        .user-picker button.active-dasha {
+            background: rgba(233,30,99,0.12); border-color: rgba(233,30,99,0.3); color: #f48fb1;
+        }
+        .user-picker button.active-ilya {
+            background: rgba(100,180,255,0.12); border-color: rgba(100,180,255,0.3); color: #7ab8f5;
+        }
+
         .card-header {
             padding: 24px 28px 12px; display: flex; justify-content: space-between;
             align-items: flex-start; flex-wrap: wrap; gap: 12px;
@@ -324,6 +413,11 @@
     <div class="dates">9 – 12 апреля 2026 &middot; 3 ночи &middot; Даша & Илья</div>
 </div>
 
+<div class="user-picker">
+    <button id="btn-dasha" onclick="setUser('dasha')">Даша</button>
+    <button id="btn-ilya" onclick="setUser('ilya')">Илья</button>
+</div>
+
 <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('housing')">Жильё</button>
     <button class="tab-btn" onclick="switchTab('flights')">Авиабилеты</button>
@@ -404,6 +498,11 @@
             <a href="https://letyaginhotel.com/booking" target="_blank" class="btn-book primary">Офиц. сайт <span class="arrow">&rarr;</span></a>
             <a href="https://ostrovok.ru/hotel/russia/samara/mid11234047/letyaginy_butikhotel/" target="_blank" class="btn-book secondary">Островок <span class="arrow">&rarr;</span></a>
         </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="letyagin" onclick="toggleLike('letyagin', 'ЛетягинЪ')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+        </div>
     </div>
 
     <!-- 2. HolidayHall -->
@@ -458,6 +557,11 @@
             <a href="https://travel.yandex.ru/hotels/samara/holidayhall-samara/?checkinDate=2026-04-09&checkoutDate=2026-04-12" target="_blank" class="btn-book secondary">Я.Путешествия <span class="arrow">&rarr;</span></a>
             <a href="https://ostrovok.ru/hotel/russia/samara/mid7467350/holiday_hall/" target="_blank" class="btn-book secondary">Островок <span class="arrow">&rarr;</span></a>
         </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="holidayhall" onclick="toggleLike('holidayhall', 'HolidayHall')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+        </div>
     </div>
 
     <!-- 3. В Теме -->
@@ -511,6 +615,11 @@
             <a href="https://ostrovok.ru/hotel/russia/samara/mid10460865/v_teme/" target="_blank" class="btn-book primary">Островок <span class="arrow">&rarr;</span></a>
             <a href="https://samara.sutochno.ru/hotels/111373" target="_blank" class="btn-book secondary">Суточно <span class="arrow">&rarr;</span></a>
         </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="vteme" onclick="toggleLike('vteme', 'В Теме')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+        </div>
     </div>
 
     <!-- 4. Grand London Apartment -->
@@ -561,6 +670,11 @@
         </div>
         <div class="booking-links">
             <a href="https://samara.sutochno.ru/?query=%D0%9F%D0%BE%D0%BB%D0%B5%D0%B2%D0%B0%D1%8F+71&dates=2026-04-09_2026-04-12&guests=2" target="_blank" class="btn-book primary">Суточно.ру <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="grandlondon" onclick="toggleLike('grandlondon', 'Grand London')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
         </div>
     </div>
 
@@ -615,6 +729,11 @@
             <a href="https://hamptonsamara.ru/" target="_blank" class="btn-book primary">Офиц. сайт <span class="arrow">&rarr;</span></a>
             <a href="https://ostrovok.ru/hotel/russia/samara/mid8141919/hampton_by_hilton_samara/" target="_blank" class="btn-book secondary">Островок <span class="arrow">&rarr;</span></a>
         </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="hampton" onclick="toggleLike('hampton', 'Hampton')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+        </div>
     </div>
 
     <!-- 6. Студия на Некрасовской -->
@@ -665,6 +784,11 @@
         </div>
         <div class="booking-links">
             <a href="https://samara.sutochno.ru/1272577" target="_blank" class="btn-book primary">Суточно.ру <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="nekrasovskaya" onclick="toggleLike('nekrasovskaya', 'Некрасовская')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
         </div>
     </div>
 
@@ -719,6 +843,11 @@
             <a href="https://hotel-rossia.ru/booking" target="_blank" class="btn-book primary">Офиц. сайт <span class="arrow">&rarr;</span></a>
             <a href="https://travel.yandex.ru/hotels/samara/gostinitsa-rossiia/?checkinDate=2026-04-09&checkoutDate=2026-04-12" target="_blank" class="btn-book secondary">Я.Путешествия <span class="arrow">&rarr;</span></a>
         </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="rossia" onclick="toggleLike('rossia', 'Россия')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
+        </div>
     </div>
 
     <!-- 8. Отель Times -->
@@ -769,6 +898,11 @@
         </div>
         <div class="booking-links">
             <a href="https://ostrovok.ru/hotel/russia/samara/mid7467350/hotel_times/" target="_blank" class="btn-book primary">Островок <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="like-row">
+            <button class="like-btn" data-hotel="times" onclick="toggleLike('times', 'Times')">
+                <span class="heart">&#9825;</span> <span class="like-text">Нравится</span>
+            </button>
         </div>
     </div>
 
@@ -1197,12 +1331,110 @@
     Цены ориентировочные. Перед бронированием проверяйте актуальность на площадках.
 </footer>
 
+<div class="picks-bar" id="picksBar">
+    <h3>Выбранные варианты</h3>
+    <div class="picks-columns">
+        <div class="picks-column">
+            <div class="picks-column-title dasha">Даша</div>
+            <div class="picks-list" id="picks-dasha"></div>
+        </div>
+        <div class="picks-column">
+            <div class="picks-column-title ilya">Илья</div>
+            <div class="picks-list" id="picks-ilya"></div>
+        </div>
+    </div>
+    <div class="picks-hint" id="matchHint"></div>
+</div>
+
 <script>
     document.getElementById('lastUpdated').textContent =
         'Обновлено: ' + new Date().toLocaleString('ru-RU', {
             day: 'numeric', month: 'long', year: 'numeric',
             hour: '2-digit', minute: '2-digit'
         });
+
+    // --- Система выбора ---
+    let currentUser = localStorage.getItem('samara_user') || null;
+    let picks = JSON.parse(localStorage.getItem('samara_picks') || '{"dasha":[],"ilya":[]}');
+
+    function setUser(user) {
+        currentUser = user;
+        localStorage.setItem('samara_user', user);
+        document.getElementById('btn-dasha').className = user === 'dasha' ? 'active-dasha' : '';
+        document.getElementById('btn-ilya').className = user === 'ilya' ? 'active-ilya' : '';
+        updateAllButtons();
+        updatePicksBar();
+    }
+
+    function toggleLike(hotelId, hotelName) {
+        if (!currentUser) {
+            alert('Сначала выбери кто ты — Даша или Илья');
+            return;
+        }
+        const idx = picks[currentUser].findIndex(p => p.id === hotelId);
+        if (idx >= 0) {
+            picks[currentUser].splice(idx, 1);
+        } else {
+            picks[currentUser].push({ id: hotelId, name: hotelName });
+        }
+        localStorage.setItem('samara_picks', JSON.stringify(picks));
+        updateAllButtons();
+        updatePicksBar();
+    }
+
+    function removePick(user, hotelId) {
+        picks[user] = picks[user].filter(p => p.id !== hotelId);
+        localStorage.setItem('samara_picks', JSON.stringify(picks));
+        updateAllButtons();
+        updatePicksBar();
+    }
+
+    function updateAllButtons() {
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            const hid = btn.dataset.hotel;
+            const isLiked = currentUser && picks[currentUser].some(p => p.id === hid);
+            btn.classList.toggle('liked', isLiked);
+            btn.classList.toggle('dasha', currentUser === 'dasha');
+            btn.classList.toggle('ilya', currentUser === 'ilya');
+            btn.querySelector('.heart').innerHTML = isLiked ? '&#9829;' : '&#9825;';
+            btn.querySelector('.like-text').textContent = isLiked ? 'Выбрано' : 'Нравится';
+        });
+    }
+
+    function updatePicksBar() {
+        const bar = document.getElementById('picksBar');
+        const hasPicks = picks.dasha.length > 0 || picks.ilya.length > 0;
+        bar.classList.toggle('visible', hasPicks);
+        ['dasha', 'ilya'].forEach(user => {
+            const list = document.getElementById('picks-' + user);
+            if (picks[user].length === 0) {
+                list.innerHTML = '<span style="color:#3a4a5a;font-size:0.82em;">пока пусто</span>';
+            } else {
+                list.innerHTML = picks[user].map(p => {
+                    const other = user === 'dasha' ? 'ilya' : 'dasha';
+                    const isMatch = picks[other].some(q => q.id === p.id);
+                    return '<span class="pick-chip ' + user + '">' + p.name
+                        + (isMatch ? '<span class="match-badge">совпадение!</span>' : '')
+                        + '<span class="remove" onclick="removePick(\'' + user + '\',\'' + p.id + '\')">&times;</span></span>';
+                }).join('');
+            }
+        });
+        const matches = picks.dasha.filter(d => picks.ilya.some(i => i.id === d.id));
+        const hint = document.getElementById('matchHint');
+        if (matches.length > 0) {
+            hint.innerHTML = '&#10003; Совпадения: <strong>' + matches.map(m => m.name).join(', ') + '</strong> — бронируем!';
+            hint.style.color = '#81c784';
+        } else if (picks.dasha.length > 0 && picks.ilya.length > 0) {
+            hint.textContent = 'Пока совпадений нет — выбирайте дальше';
+            hint.style.color = '#4a5a6a';
+        } else {
+            hint.textContent = 'Выберите кто вы вверху страницы и отмечайте понравившиеся варианты';
+            hint.style.color = '#4a5a6a';
+        }
+    }
+
+    if (currentUser) setUser(currentUser);
+    updatePicksBar();
 
     function switchTab(tabName) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
