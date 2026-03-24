@@ -43,3 +43,13 @@
 2026-03-24 14:30:02,265 [INFO] Цены не изменились
 2026-03-24 14:30:02,266 [INFO] === Обновление завершено ===
 
+2026-03-24 15:00:01,425 [INFO] === Начало обновления ===
+2026-03-24 15:00:01,426 [INFO] Ищу цены Москва → Самара 09.04...
+2026-03-24 15:00:01,602 [WARNING] Ошибка загрузки https://rasp.yandex.ru/search/plane/?fromId=c213&toId=c51&when=2026-04-09: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)>
+2026-03-24 15:00:01,869 [WARNING] Ошибка загрузки https://avia.tutu.ru/f/Moskva/Samara/?date=09.04.2026: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)>
+2026-03-24 15:00:01,869 [INFO] Ищу цены Самара → Москва 12.04...
+2026-03-24 15:00:01,921 [WARNING] Ошибка загрузки https://rasp.yandex.ru/search/plane/?fromId=c51&toId=c213&when=2026-04-12: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)>
+2026-03-24 15:00:01,986 [WARNING] Ошибка загрузки https://avia.tutu.ru/f/Samara/Moskva/?date=12.04.2026: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)>
+2026-03-24 15:00:01,989 [INFO] Цены не изменились
+2026-03-24 15:00:01,989 [INFO] === Обновление завершено ===
+
