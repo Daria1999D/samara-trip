@@ -2115,18 +2115,18 @@
             hour: '2-digit', minute: '2-digit'
         });
 
-    let activeFilters = { housing: 'all', flights: 'all' };
+    var activeFilters = { housing: 'all', flights: 'all' };
 
     // --- Система выбора (localStorage + GitHub API) ---
     const GH_REPO = 'Daria1999D/samara-trip';
     const GH_FILE = 'picks.json';
     const GH_TOKEN = ['ghp','_AwTJ7RydA2o','hH8bxlFZlDJ6','ULc19Ox31KtfN'].join('');
     const GH_API = 'https://api.github.com/repos/' + GH_REPO + '/contents/' + GH_FILE;
-    let currentUser = localStorage.getItem('samara_user') || null;
-    let picks = JSON.parse(localStorage.getItem('samara_picks') || '{"dasha":[],"ilya":[]}');
-    let dislikes = JSON.parse(localStorage.getItem('samara_dislikes') || '{"dasha":[],"ilya":[]}');
-    let syncing = false;
-    let fileSha = null;
+    var currentUser = localStorage.getItem('samara_user') || null;
+    var picks = JSON.parse(localStorage.getItem('samara_picks') || '{"dasha":[],"ilya":[]}');
+    var dislikes = JSON.parse(localStorage.getItem('samara_dislikes') || '{"dasha":[],"ilya":[]}');
+    var syncing = false;
+    var fileSha = null;
 
     function mergePicks(local, cloud) {
         const ids = new Set(local.map(p => p.id));
@@ -2212,7 +2212,7 @@
         localStorage.setItem('samara_dislikes', JSON.stringify(dislikes));
     }
 
-    let saveTimer = null;
+    var saveTimer = null;
     function savePicks() {
         saveLocal();
         clearTimeout(saveTimer);
