@@ -72,7 +72,7 @@
         .filter-btn.active-dasha { background: #ffebe9; color: #cf222e; border-color: #ff8182; }
         .filter-btn.active-ilya { background: #ddf4ff; color: #0969da; border-color: #54aeff; }
         .filter-btn.active-match { background: #dafbe1; color: #116329; border-color: rgba(126,203,161,0.4); }
-        .card.filter-hidden, .flight-card.filter-hidden { display: none; }
+        .card.filter-hidden, .flight-card.filter-hidden { display: none !important; }
 
         .intro { max-width: 800px; margin: 0 auto; padding: 40px 20px 20px; }
         .intro h2 { font-size: 1.3em; font-weight: 400; margin-bottom: 12px; color: #c8d6e5; }
@@ -2097,6 +2097,10 @@
             </div>
         </div>
         <div class="picks-hint" id="matchHint"></div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+            <button onclick="exportPicks()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#d4d0cc;font-size:0.82em;cursor:pointer;font-family:inherit;">Отправить мой выбор</button>
+            <button onclick="importPicks()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#d4d0cc;font-size:0.82em;cursor:pointer;font-family:inherit;">Получить выбор</button>
+        </div>
     </div>
 </div>
 
@@ -2107,7 +2111,7 @@
             hour: '2-digit', minute: '2-digit'
         });
 
-    // --- Система выбора (localStorage) ---
+    // --- Система выбора (localStorage + обмен кодом) ---
     let currentUser = localStorage.getItem('samara_user') || null;
     let picks = JSON.parse(localStorage.getItem('samara_picks') || '{"dasha":[],"ilya":[]}');
     let dislikes = JSON.parse(localStorage.getItem('samara_dislikes') || '{"dasha":[],"ilya":[]}');
@@ -2116,6 +2120,65 @@
         localStorage.setItem('samara_picks', JSON.stringify(picks));
         localStorage.setItem('samara_dislikes', JSON.stringify(dislikes));
     }
+
+    // Экспорт/импорт выбора — для синхронизации между устройствами
+    function exportPicks() {
+        if (!currentUser) { alert('Сначала выбери кто ты'); return; }
+        const data = { user: currentUser, picks: picks[currentUser], dislikes: dislikes[currentUser] };
+        const code = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+        const shortCode = code.replace(/=/g, '');
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(shortCode).then(() => {
+                alert('Код скопирован! Отправь его ' + (currentUser === 'dasha' ? 'Илье' : 'Даше'));
+            });
+        } else {
+            prompt('Скопируй этот код и отправь ' + (currentUser === 'dasha' ? 'Илье' : 'Даше') + ':', shortCode);
+        }
+    }
+
+    function importPicks() {
+        const code = prompt('Вставь код от ' + (currentUser === 'dasha' ? 'Ильи' : 'Даши') + ':');
+        if (!code) return;
+        try {
+            const padded = code + '='.repeat((4 - code.length % 4) % 4);
+            const data = JSON.parse(decodeURIComponent(escape(atob(padded))));
+            if (data.user && data.picks) {
+                const otherUser = data.user;
+                if (otherUser === currentUser) {
+                    alert('Это твой собственный код! Нужен код от ' + (currentUser === 'dasha' ? 'Ильи' : 'Даши'));
+                    return;
+                }
+                picks[otherUser] = data.picks;
+                dislikes[otherUser] = data.dislikes || [];
+                savePicks();
+                updateAllButtons();
+                updatePicksBar();
+                alert('Выбор ' + (otherUser === 'dasha' ? 'Даши' : 'Ильи') + ' загружен! Проверяй совпадения.');
+            }
+        } catch(e) {
+            alert('Неверный код, попробуй ещё раз');
+        }
+    }
+
+    // Проверяем URL параметры для автоимпорта
+    (function checkUrlImport() {
+        const params = new URLSearchParams(window.location.search);
+        const importCode = params.get('sync');
+        if (importCode) {
+            try {
+                const padded = importCode + '='.repeat((4 - importCode.length % 4) % 4);
+                const data = JSON.parse(decodeURIComponent(escape(atob(padded))));
+                if (data.user && data.picks) {
+                    picks[data.user] = data.picks;
+                    dislikes[data.user] = data.dislikes || [];
+                    savePicks();
+                }
+            } catch(e) {}
+            // Clean URL
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+    })();
 
     function setUser(user) {
         currentUser = user;
