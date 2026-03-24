@@ -313,15 +313,20 @@
         .summary { max-width: 800px; margin: 40px auto; padding: 30px 20px; text-align: center; }
         .summary h2 { font-size: 1.2em; font-weight: 400; margin-bottom: 16px; color: #1f2328; letter-spacing: 0.02em; }
         .summary p { color: #8a9bae; font-size: 0.95em; max-width: 600px; margin: 0 auto; }
-        .ranking { display: flex; justify-content: center; gap: 16px; margin: 30px 0; flex-wrap: wrap; }
-        .rank-item {
-            background: #faf8f5; border: 1px solid #e0dcd5;
-            border-radius: 8px; padding: 14px; text-align: center; min-width: 110px;
+        .ranking {
+            display: grid; grid-template-columns: repeat(auto-fill, 90px);
+            justify-content: center; gap: 10px; margin: 24px auto; max-width: 700px;
         }
-        .rank-item.first { border-color: #0969da; background: #ddf4ff; }
-        .rank-position { font-size: 1.6em; font-weight: 600; margin-bottom: 2px; }
-        .rank-name { font-size: 0.8em; color: #8a9bae; }
-        .rank-score { font-size: 1.1em; font-weight: 500; margin-top: 4px; }
+        .rank-item {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px; padding: 12px 6px; text-align: center;
+            width: 90px; height: 90px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+        }
+        .rank-item.first { border-color: rgba(232,200,122,0.3); background: rgba(232,200,122,0.06); }
+        .rank-position { font-size: 1.3em; font-weight: 600; margin-bottom: 1px; line-height: 1; }
+        .rank-name { font-size: 0.68em; color: #8b949e; line-height: 1.2; max-width: 80px; }
+        .rank-score { font-size: 0.95em; font-weight: 500; margin-top: 3px; }
 
         /* Timeline */
         .timeline { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
@@ -423,9 +428,11 @@
             .pros-cons { grid-template-columns: 1fr; }
             .score-label { width: 80px; font-size: 0.78em; }
             .card-image { height: 180px; }
-            .ranking { gap: 8px; }
-            .rank-item { min-width: 70px; padding: 10px; }
-            .rank-name { font-size: 0.72em; }
+            .ranking { grid-template-columns: repeat(auto-fill, 76px); gap: 8px; }
+            .rank-item { width: 76px; height: 76px; padding: 8px 4px; }
+            .rank-position { font-size: 1.1em; }
+            .rank-name { font-size: 0.62em; max-width: 68px; }
+            .rank-score { font-size: 0.85em; }
             .booking-links { gap: 8px; }
             .btn-book { padding: 10px 18px; font-size: 0.85em; }
             /* Flights mobile */
