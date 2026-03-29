@@ -6,24 +6,36 @@
         "name": "HolidayHall"
       },
       {
+        "id": "y74211",
+        "name": "Y7 4211 (19:35)"
+      },
+      {
         "id": "molodog213",
-        "name": "ÐÐ¾Ð»Ð¾Ð´Ð¾Ð³Ð². 213"
+        "name": "Молодогв. 213"
       },
       {
         "id": "galaktionovskaya",
-        "name": "ÐÐ°Ð»Ð°ÐºÑÐ¸Ð¾Ð½Ð¾Ð²ÑÐºÐ°Ñ"
+        "name": "Галактионовская"
       },
       {
         "id": "stilkomfort",
-        "name": "Ð¡ÑÐ¸Ð»Ñ Ð¸ ÐÐ¾Ð¼ÑÐ¾ÑÑ"
+        "name": "Стиль и Комфорт"
       },
       {
-        "id": "FV6061",
-        "name": "FV 6061 (06:25)"
+        "id": "vgosti",
+        "name": "V-GOSTI Видовые"
       },
       {
-        "id": "UT357",
-        "name": "UT 357 (19:30)"
+        "id": "fv6077",
+        "name": "FV 6077 (20:45)"
+      },
+      {
+        "id": "y74211late",
+        "name": "Y7 4211 (21:05)"
+      },
+      {
+        "id": "ret_su1605",
+        "name": "SU 1605 (19:45)"
       },
       {
         "id": "SU1604",
@@ -34,23 +46,34 @@
         "name": "Y7 4211 (22:35)"
       },
       {
+        "id": "SU1214",
+        "name": "SU 1214 (16:55)"
+      },
+      {
+        "id": "FV6061",
+        "name": "FV 6061 (06:25)"
+      },
+      {
+        "id": "UT357",
+        "name": "UT 357 (19:30)"
+      },
+      {
         "id": "ret_ut358",
         "name": "UT 358 (23:10)"
       },
       {
-        "id": "ret_su1605",
-        "name": "SU 1605 (23:45)"
-      },
-      {
-        "id": "vgosti",
-        "name": "V-GOSTI ÐÐ¸Ð´Ð¾Ð²ÑÐµ"
+        "id": "ret_su1215",
+        "name": "SU 1215 (20:40)"
       }
     ],
     "dislikes": [
-      "vteme",
       "grandlondon",
       "hampton",
       "nekrasovskaya",
+      "rossia",
+      "apartin",
+      "vteme",
+      "times",
       "DP6581",
       "ret_dp424",
       "ret_dp6582",
